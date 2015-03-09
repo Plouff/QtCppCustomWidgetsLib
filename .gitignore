@@ -1,0 +1,19 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.autosave
+
+# C extensions
+*.so
+
+# Rope folders
+.ropeproject/
+
+# Eclipse
+org.eclipse.core.resources.prefs
+.pydevproject*
+/.settings
+/.project*
+
+# Other
+
