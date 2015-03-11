@@ -57,7 +57,7 @@ void SingleHistogram::initPlot()
     for (auto axe : {xAxis, yAxis, yAxis2})
     {
         // Disable ticks
-//        axe->setTicks(false);
+        axe->setTicks(false);
         axe->setTickLabels(false);
 
         // Disable grid

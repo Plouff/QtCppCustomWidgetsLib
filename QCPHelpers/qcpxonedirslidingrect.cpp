@@ -158,6 +158,7 @@ void QCPXOneDirSlidingRect::onMouseReleased(QMouseEvent *event)
     Q_UNUSED(event)
 
     isBeingDragged = false;
+    lastXDelta = 0;
     plot->updateCoord(this, xCoord);
 }
 
