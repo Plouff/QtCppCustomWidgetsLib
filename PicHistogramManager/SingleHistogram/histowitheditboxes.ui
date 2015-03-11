@@ -34,52 +34,52 @@
    </property>
    <item>
     <layout class="QGridLayout" name="grid">
-     <item row="1" column="1" alignment="Qt::AlignRight">
-      <widget class="QLineEdit" name="maxBox">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="toolTip">
-        <string extracomment="Set white point"/>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0" alignment="Qt::AlignLeft">
-      <widget class="QLineEdit" name="minBox">
-       <property name="minimumSize">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="toolTip">
-        <string extracomment="Set black point"/>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="0" colspan="2">
       <widget class="SingleHistogram" name="hist" native="true"/>
+     </item>
+     <item row="1" column="0" alignment="Qt::AlignLeft">
+      <widget class="QSpinBox" name="minBox">
+       <property name="minimumSize">
+        <size>
+         <width>60</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>60</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="minimum">
+        <number>0</number>
+       </property>
+       <property name="maximum">
+        <number>255</number>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1" alignment="Qt::AlignRight">
+      <widget class="QSpinBox" name="maxBox">
+       <property name="minimumSize">
+        <size>
+         <width>60</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>60</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="minimum">
+        <number>0</number>
+       </property>
+       <property name="maximum">
+        <number>255</number>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

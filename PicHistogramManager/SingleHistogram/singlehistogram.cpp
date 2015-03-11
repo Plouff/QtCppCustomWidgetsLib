@@ -40,14 +40,26 @@ void SingleHistogram::updateCoord(QCPXOneDirSlidingRect *rect, int newCoord)
         assert(false);
 }
 
-int SingleHistogram::getMin()
+int SingleHistogram::getUserInputMin()
 {
-    return leftRect->getMin();
+    return leftRect->getXCoord();
 }
 
-int SingleHistogram::getMax()
+int SingleHistogram::getUserInputMax()
 {
-    return rightRect->getMax();
+    return rightRect->getXCoord();
+}
+
+void SingleHistogram::setUserInputMin(int value)
+{
+    leftRect->setXCoord(value);
+    replot();
+}
+
+void SingleHistogram::setUserInputMax(int value)
+{
+    rightRect->setXCoord(value);
+    replot();
 }
 
 

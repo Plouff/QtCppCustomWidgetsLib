@@ -55,7 +55,8 @@ int QCPXOneDirSlidingRect::getXCoord() const
 void QCPXOneDirSlidingRect::setXCoord(int value)
 {
     xCoord = value;
-    plot->replot();
+    setNewCoord(value);
+//    plot->replot();
 }
 
 void QCPXOneDirSlidingRect::setNewCoord(double newMainCoord)

@@ -12,14 +12,16 @@ public:
     explicit SingleHistogram(QWidget *parent = 0);
     ~SingleHistogram();
     void updateCoord(QCPXOneDirSlidingRect *rect, int newCoord);
-    int getMin();
-    int getMax();
+    int getUserInputMin();
+    int getUserInputMax();
 
 signals:
     void newMinFromHist(int min);
     void newMaxFromHist(int max);
 
 public slots:
+    void setUserInputMin(int value);
+    void setUserInputMax(int value);
 
 private:
     void initPlot();

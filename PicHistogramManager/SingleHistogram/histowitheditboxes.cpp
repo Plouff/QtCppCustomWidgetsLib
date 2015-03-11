@@ -8,12 +8,11 @@ HistoWithEditboxes::HistoWithEditboxes(QWidget *parent) :
     ui->setupUi(this);
 
     // Copy startup values in the text boxes
-    setMinInTextBox(ui->hist->getMin());
-    setMaxInTextBox(ui->hist->getMax());
+    setMinInTextBox(ui->hist->getUserInputMin());
+    setMaxInTextBox(ui->hist->getUserInputMax());
 
     // connect signals
     connectSignals();
-
 }
 
 HistoWithEditboxes::~HistoWithEditboxes()
@@ -23,23 +22,35 @@ HistoWithEditboxes::~HistoWithEditboxes()
 
 void HistoWithEditboxes::setMinInTextBox(int min)
 {
-    QString minStr = QString::number(min);
-    ui->minBox->setText(minStr);
+    ui->minBox->setValue(min);
 }
 
 void HistoWithEditboxes::setMaxInTextBox(int max)
 {
-    QString maxStr = QString::number(max);
-    ui->maxBox->setText(maxStr);
+    ui->maxBox->setValue(max);
 }
 
 void HistoWithEditboxes::connectSignals()
 {
+    // Histogram to spin boxes
     connect(ui->hist, SIGNAL(newMinFromHist(int)),
             this, SLOT(updateMinFromHist(int)));
-
     connect(ui->hist, SIGNAL(newMaxFromHist(int)),
             this, SLOT(updateMaxFromHist(int)));
+
+    // Spin boxes to histogram
+    connect(ui->maxBox, SIGNAL(valueChanged(int)),
+            ui->hist, SLOT(setUserInputMax(int)));
+    connect(ui->minBox, SIGNAL(valueChanged(int)),
+            ui->hist, SLOT(setUserInputMin(int)));
+
+    //
+    //
+    // TOOOOOOOODOOOOOOOO : update min max of spinbox dynamically
+    // TOOOOOOOODOOOOOOOO : update min max of spinbox dynamically
+    // TOOOOOOOODOOOOOOOO : update min max of spinbox dynamically
+    //
+    //
 }
 
 void HistoWithEditboxes::updateMinFromHist(int min)
