@@ -19,7 +19,8 @@ SOURCES += main.cpp \
     ../../QtExternalLibs/qcustomplot/qcustomplot.cpp \
     pichistogrammanager.cpp \
     QCPHelpers/qcpxonedirslidingrect.cpp \
-    PicHistogramManager/SingleHistogram/singlehistogram.cpp
+    PicHistogramManager/SingleHistogram/singlehistogram.cpp \
+    PicHistogramManager/SingleHistogram/histowitheditboxes.cpp
 
 
 
@@ -27,7 +28,9 @@ HEADERS += qtcppcustomwidgets.h \
     ../../QtExternalLibs/qcustomplot/qcustomplot.h \
     pichistogrammanager.h \
     PicHistogramManager/SingleHistogram/singlehistogram.h \
-    QCPHelpers/qcpxonedirslidingrect.h
+    QCPHelpers/qcpxonedirslidingrect.h \
+    histowitheditboxes.h \
+    PicHistogramManager/SingleHistogram/histowitheditboxes.h
 unix {
     target.path = /usr/lib
     INSTALLS += target
@@ -39,5 +42,6 @@ CONFIG += c++11
 
 FORMS += \
     PicHistogramManager/SingleHistogram/singlehistogram.ui \
-    PicHistogramManager/pichistogram.ui
+    PicHistogramManager/pichistogram.ui \
+    PicHistogramManager/SingleHistogram/histowitheditboxes.ui
 

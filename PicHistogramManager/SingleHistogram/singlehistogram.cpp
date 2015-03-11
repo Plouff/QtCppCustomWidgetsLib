@@ -12,16 +12,10 @@ SingleHistogram::SingleHistogram(QWidget *parent) :
 {
     // Init histograms
     initPlot();
-//    setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
-
-    // Deal with rectangle boundaries
-//    QCPXOneDirSlidingRect * rectBorder[2];
-//    rectBorder[0] = new QCPXOneDirSlidingRect(this);
-//    rectBorder[1] = new QCPXOneDirSlidingRect(this);
-//    leftRect  = rectBorder[0];
-//    rightRect = rectBorder[1];
-
     initBorders();
+
+    // Todo: test zoom
+    // setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
 }
 
 SingleHistogram::~SingleHistogram()
@@ -34,14 +28,26 @@ void SingleHistogram::updateCoord(QCPXOneDirSlidingRect *rect, int newCoord)
     if (rect == leftRect) {
         leftBorderCoord = newCoord;
         rightRect->setMin(leftBorderCoord);
+        emit newMinFromHist(newCoord);
     }
     else if (rect == rightRect)
     {
         rightBorderCoord = newCoord;
         leftRect->setMax(rightBorderCoord);
+        emit newMaxFromHist(newCoord);
     }
     else
         assert(false);
+}
+
+int SingleHistogram::getMin()
+{
+    return leftRect->getMin();
+}
+
+int SingleHistogram::getMax()
+{
+    return rightRect->getMax();
 }
 
 

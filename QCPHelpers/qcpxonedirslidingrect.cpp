@@ -39,6 +39,7 @@ QCPXOneDirSlidingRect::QCPXOneDirSlidingRect(SingleHistogram *plot,
     const QBrush * brush = new QBrush(Qt::darkGray);
     setBrush(*brush);
 
+    isBeingDragged = false;
     connectSignals();
 }
 
@@ -117,6 +118,7 @@ void QCPXOneDirSlidingRect::onMousePressed(QMouseEvent *event)
 {
     xCoordAtMousePressed = mouseEventToxCoord(event);
     isBeingDragged = isPressed(xCoordAtMousePressed);
+//    std::cout << "xCoordAtMousePressed: " << xCoordAtMousePressed << std::endl;
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 // Select test doesn't work.......
@@ -133,7 +135,7 @@ void QCPXOneDirSlidingRect::onMousePressed(QMouseEvent *event)
 void QCPXOneDirSlidingRect::onMouseMoved(QMouseEvent *event)
 {
     if (isBeingDragged)
-      {
+    {
         double newXCoord;
 
         // Compute x delta (from clic to current mouse position)
@@ -146,6 +148,7 @@ void QCPXOneDirSlidingRect::onMouseMoved(QMouseEvent *event)
             setNewCoord(newXCoord);
             // Replot
             plot->replot();
+            plot->updateCoord(this, xCoord);
         }
 
         lastXDelta = xDelta;
