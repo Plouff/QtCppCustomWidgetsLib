@@ -29,7 +29,6 @@ HEADERS += qtcppcustomwidgets.h \
     pichistogrammanager.h \
     PicHistogramManager/SingleHistogram/singlehistogram.h \
     QCPHelpers/qcpxonedirslidingrect.h \
-    histowitheditboxes.h \
     PicHistogramManager/SingleHistogram/histowitheditboxes.h
 unix {
     target.path = /usr/lib

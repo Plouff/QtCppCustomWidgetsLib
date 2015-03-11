@@ -24,6 +24,8 @@ private:
 private slots:
     void updateMinFromHist(int min);
     void updateMaxFromHist(int max);
+    void setMaxToSpinBox(int max);
+    void setMinToSpinBox(int min);
 };
 
 #endif // HISTOWITHEDITBOXES_H
