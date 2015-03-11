@@ -1,22 +1,33 @@
+#include <string>
+#include <assert.h>
+#include <iostream>
+
+#include "singlehistogram.h"
 #include "qcpxonedirslidingrect.h"
 
-QCPXOneDirSlidingRect::QCPXOneDirSlidingRect(
-        double topLeftX, double topLeftY,
-        double bottomRightX, double bottomRightY,
-        mainCoord maincoord, QCustomPlot * plot, QCPAxis axis) :
+QCPXOneDirSlidingRect::QCPXOneDirSlidingRect(SingleHistogram *plot,
+        int topLeftX, int topLeftY,
+        int bottomRightX, int bottomRightY, int min, int max,
+        mainCoord maincoord, QCPAxis *axis) :
     QCPItemRect(plot),
-    topLeftX (topLeftX), topLeftY(topLeftY), bottomRightX(bottomRightX),
-    maincoord(maincoord), plot(plot), axis(axis)
+    plot(plot),
+    topLeftX (topLeftX), topLeftY(topLeftY),
+    bottomRightX(bottomRightX), bottomRightY(bottomRightY),
+    min(min), max(max),
+    maincoord(maincoord), axis(axis)
 {
     // Initialize the size ***************************************
     switch (maincoord)
     {
-        case leftX :
-            xCoord = bottomRightX;
-        case rightX :
+        case mainCoord::leftX :
             xCoord = topLeftX;
+            break;
+        case mainCoord::rightX :
+            xCoord = bottomRightX;
+            break;
         default :
-            throw std::exception("maincoord case not implemented: "+maincoord);
+            assert(false);
+            break;
     }
 
     topLeft->setCoords(topLeftX, topLeftY);
@@ -27,6 +38,8 @@ QCPXOneDirSlidingRect::QCPXOneDirSlidingRect(
     // Initialize the fill pattern *******************************
     const QBrush * brush = new QBrush(Qt::darkGray);
     setBrush(*brush);
+
+    connectSignals();
 }
 
 QCPXOneDirSlidingRect::~QCPXOneDirSlidingRect()
@@ -41,22 +54,58 @@ int QCPXOneDirSlidingRect::getXCoord() const
 void QCPXOneDirSlidingRect::setXCoord(int value)
 {
     xCoord = value;
+    plot->replot();
 }
 
 void QCPXOneDirSlidingRect::setNewCoord(double newMainCoord)
 {
     switch (maincoord)
     {
-        case leftX :
-            bottomRight->setCoords(newMainCoord, bottomRightY);
-        case rightX :
-            topLeftX->setCoords(newMainCoord, topLeftY);
+        case mainCoord::rightX :
+            this->bottomRight->setCoords(newMainCoord, bottomRightY);
+            break;
+        case mainCoord::leftX :
+            this->topLeft->setCoords(newMainCoord, topLeftY);
+            break;
         default :
-            throw std::exception("maincoord case not implemented");
+            assert(false);
+            break;
     }
-
+//    std::cout << "newMainCoord: " << newMainCoord << std::endl;
     xCoord = newMainCoord;
 }
+
+bool QCPXOneDirSlidingRect::isPressed(double xCoordAtMousePressed)
+{
+    if (xCoordAtMousePressed <= xCoord && maincoord == mainCoord::rightX)
+        return true;
+    else if (xCoordAtMousePressed >= xCoord && maincoord == mainCoord::leftX)
+        return true;
+    else
+        return false;
+}
+
+int QCPXOneDirSlidingRect::getMax() const
+{
+    return max;
+}
+
+void QCPXOneDirSlidingRect::setMax(int value)
+{
+    max = value;
+}
+
+int QCPXOneDirSlidingRect::getMin() const
+{
+    return min;
+}
+
+void QCPXOneDirSlidingRect::setMin(int value)
+{
+    min = value;
+}
+
+
 
 //******************************************************************************
 //******************************************************************************
@@ -66,11 +115,19 @@ void QCPXOneDirSlidingRect::setNewCoord(double newMainCoord)
 
 void QCPXOneDirSlidingRect::onMousePressed(QMouseEvent *event)
 {
-    if (selectTest(event->pos(), false) > 0)
-    {
-        isBeingDragged = true;
-        xCoordAtMousePressed = mouseEventToxCoord(event);
-    }
+    xCoordAtMousePressed = mouseEventToxCoord(event);
+    isBeingDragged = isPressed(xCoordAtMousePressed);
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// Select test doesn't work.......
+//
+//    std::cout << "selecTest: " << (double) this->selectTest(event->pos(), false) << std::endl;
+//    if (this->selectTest(event->pos(), false) > 0)
+//    {
+//        isBeingDragged = true;
+//        xCoordAtMousePressed = mouseEventToxCoord(event);
+//        std::cout << "Clic at " << xCoordAtMousePressed << std::endl;
+//    }
 }
 
 void QCPXOneDirSlidingRect::onMouseMoved(QMouseEvent *event)
@@ -80,30 +137,50 @@ void QCPXOneDirSlidingRect::onMouseMoved(QMouseEvent *event)
         double newXCoord;
 
         // Compute x delta (from clic to current mouse position)
-        const double xDelta = xCoordAtMousePressed - mouseEventToxCoord(event);
+        int xDelta = round(mouseEventToxCoord(event) - xCoordAtMousePressed);
 
-        // Compute new coordinates
-        newXCoord = plot.validateXCoord(currentLeftBorderXCoord-xDelta);
-        setNewCoord(newXCoord);
+        if (xDelta != 0 && xDelta != lastXDelta)
+        {
+            // Compute new coordinates
+            newXCoord = validateXCoord(xCoord + xDelta - lastXDelta);
+            setNewCoord(newXCoord);
+            // Replot
+            plot->replot();
+        }
 
-        plot.replot();
+        lastXDelta = xDelta;
     }
+
 }
 
 void QCPXOneDirSlidingRect::onMouseReleased(QMouseEvent *event)
 {
     Q_UNUSED(event)
 
-    // Round delta to closest integer
-    const int xDelta = round(xCoordAtMousePressed - mouseEventToxCoord(event));
-    if (xDelta != 0)
-    {
-        int finalXCoord = (int) plot.validateXCoord(currentLeftBorderXCoord-xDelta);
-        setNewCoord(newXCoord);
-        xCoord = finalXCoord;
-        plot.replot();
-    }
     isBeingDragged = false;
+    plot->updateCoord(this, xCoord);
+}
+
+void QCPXOneDirSlidingRect::connectSignals()
+{
+    connect(plot, SIGNAL(mousePress(QMouseEvent*)),
+            this, SLOT(onMousePressed(QMouseEvent*)));
+
+    connect(plot, SIGNAL(mouseMove(QMouseEvent*)),
+            this, SLOT(onMouseMoved(QMouseEvent*)));
+
+    connect(plot, SIGNAL(mouseRelease(QMouseEvent*)),
+            this, SLOT(onMouseReleased(QMouseEvent*)));
+}
+
+double QCPXOneDirSlidingRect::validateXCoord(double x)
+{
+    if (x <= min)
+        return min;
+    else if (x >= max)
+        return max;
+    else
+        return x;
 }
 
 double QCPXOneDirSlidingRect::mouseEventToxCoord(QMouseEvent *event)

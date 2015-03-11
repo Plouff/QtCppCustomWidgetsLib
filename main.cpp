@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
     PicHistogramManager histmgr;
     SingleHistogram hist;
 
-    histmgr.show();
+//    histmgr.show();
     hist.show();
 
     return app.exec();

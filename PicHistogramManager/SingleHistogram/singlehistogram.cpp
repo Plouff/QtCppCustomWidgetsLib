@@ -1,39 +1,49 @@
 #include <iostream>
 #include <math.h>
+#include <assert.h>
 
+#include "QCPHelpers/qcpxonedirslidingrect.h"
 #include "singlehistogram.h"
 #include "ui_singlehistogram.h"
+
 
 SingleHistogram::SingleHistogram(QWidget *parent) :
     QCustomPlot(parent)
 {
-    // Initialise dragging bool
-    draggingRightBorder = false;
-    draggingLeftBorder = false;
-    this->axisRect()->insetLayout()->setInsetPlacement(
-                0, QCPLayoutInset::ipFree);
-
     // Init histograms
     initPlot();
 //    setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
 
     // Deal with rectangle boundaries
-    QCPItemRect * rectBorder[2];
-    rectBorder[0] = new QCPItemRect(this);
-    rectBorder[1] = new QCPItemRect(this);
-    leftRect = rectBorder[0];
-    rightRect = rectBorder[1];
+//    QCPXOneDirSlidingRect * rectBorder[2];
+//    rectBorder[0] = new QCPXOneDirSlidingRect(this);
+//    rectBorder[1] = new QCPXOneDirSlidingRect(this);
+//    leftRect  = rectBorder[0];
+//    rightRect = rectBorder[1];
 
-    initBorders(rectBorder);
-
-    // Connect signals and slots
-    connectSignals();
+    initBorders();
 }
 
 SingleHistogram::~SingleHistogram()
 {
 
 }
+
+void SingleHistogram::updateCoord(QCPXOneDirSlidingRect *rect, int newCoord)
+{
+    if (rect == leftRect) {
+        leftBorderCoord = newCoord;
+        rightRect->setMin(leftBorderCoord);
+    }
+    else if (rect == rightRect)
+    {
+        rightBorderCoord = newCoord;
+        leftRect->setMax(rightBorderCoord);
+    }
+    else
+        assert(false);
+}
+
 
 void SingleHistogram::initPlot()
 {
@@ -46,10 +56,8 @@ void SingleHistogram::initPlot()
 
     for (auto axe : {xAxis, yAxis, yAxis2})
     {
-
-        break;
         // Disable ticks
-        axe->setTicks(false);
+//        axe->setTicks(false);
         axe->setTickLabels(false);
 
         // Disable grid
@@ -67,102 +75,27 @@ void SingleHistogram::initPlot()
     replot();
 }
 
-void SingleHistogram::initBorders(QCPItemRect *rects[])
+void SingleHistogram::initBorders()
 {
-    // Init borders
-    initBorder(rects[0]);
-    initBorder(rects[1]);
-
     // Left rectangle
-    currentLeftBorderXCoord = 0;
-    rects[0]->topLeft->setCoords(-7000, 7000);
-    rects[0]->bottomRight->setCoords(currentLeftBorderXCoord, -7000);
+    leftRect  = new QCPXOneDirSlidingRect(
+                this, -7000, 7000, 0, -7000, 0, 255,
+                mainCoord::rightX, xAxis);
+    leftBorderCoord = 0;
+    initBorder(leftRect);
 
     // Right rectangle
-    currentRightBorderXCoord = 255;
-    rects[1]->topLeft->setCoords(currentRightBorderXCoord, 7000);
-    rects[1]->bottomRight->setCoords(7000, -7000);
+    rightRect  = new QCPXOneDirSlidingRect(
+                this, 255, 7000, 7000, -7000, 0, 255,
+                mainCoord::leftX, xAxis);
+    rightBorderCoord = 255;
+    initBorder(rightRect);
 }
 
-void SingleHistogram::initBorder(QCPItemRect *rect)
+void SingleHistogram::initBorder(QCPXOneDirSlidingRect *rect)
 {
     this->addItem(rect);
     // Create fill pattern
     const QBrush * brush = new QBrush(Qt::darkGray);
     rect->setBrush(*brush);
-}
-
-void SingleHistogram::connectSignals()
-{
-    connect(this, SIGNAL(mousePress(QMouseEvent*)),
-            this, SLOT(onMousePressed(QMouseEvent*)));
-
-    connect(this, SIGNAL(mouseMove(QMouseEvent*)),
-            this, SLOT(onMouseMoved(QMouseEvent*)));
-
-    connect(this, SIGNAL(mouseRelease(QMouseEvent*)),
-            this, SLOT(onMouseReleased(QMouseEvent*)));
-}
-
-inline double SingleHistogram::validateXCoord(double x, double min, double max)
-{
-    if (x <= min)
-        return min;
-    else if (x >= max)
-        return max;
-    else
-        return x;
-}
-
-double SingleHistogram::mouseEventToxCoord(QMouseEvent *event)
-{
-    return xAxis->pixelToCoord(event->pos().x());
-}
-
-void SingleHistogram::onMousePressed(QMouseEvent *event)
-{
-    if (leftRect->selectTest(event->pos(), false) > 0)
-    {
-        draggingLeftBorder = true;
-        xCoordAtMousePressed = mouseEventToxCoord(event);
-
-    }
-    else if (rightRect->selectTest(event->pos(), false) > 0)
-    {
-        draggingRightBorder = true;
-    }
-}
-
-void SingleHistogram::onMouseMoved(QMouseEvent *event)
-{
-    if (draggingLeftBorder)
-      {
-        double newXCoord;
-
-        // Compute x delta (from clic to current mouse position)
-        const double xDelta = xCoordAtMousePressed - mouseEventToxCoord(event);
-
-        // Compute new coordinates
-        newXCoord = validateXCoord(currentLeftBorderXCoord-xDelta);
-
-
-        leftRect->bottomRight->setCoords(newXCoord, -7000);
-        this->replot();
-    }
-}
-
-void SingleHistogram::onMouseReleased(QMouseEvent *event)
-{
-    Q_UNUSED(event)
-    // Round delta to closest integer
-    const int xDelta = round(xCoordAtMousePressed - mouseEventToxCoord(event));
-    if (xDelta != 0)
-    {
-        int finalXCoord = (int) validateXCoord(currentLeftBorderXCoord-xDelta);
-        leftRect->bottomRight->setCoords(finalXCoord, -7000);
-        currentLeftBorderXCoord = finalXCoord;
-        this->replot();
-    }
-    draggingLeftBorder = false;
-    draggingRightBorder = false;
 }

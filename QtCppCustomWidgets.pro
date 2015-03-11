@@ -18,8 +18,9 @@ SOURCES += main.cpp \
     qtcppcustomwidgets.cpp \
     ../../QtExternalLibs/qcustomplot/qcustomplot.cpp \
     pichistogrammanager.cpp \
-    PicHistogramManager/SingleHistogram/singlehistogram.cpp \
-    QCPHelpers/qcpxonedirslidingrect.cpp
+    QCPHelpers/qcpxonedirslidingrect.cpp \
+    PicHistogramManager/SingleHistogram/singlehistogram.cpp
+
 
 
 HEADERS += qtcppcustomwidgets.h \
