@@ -2,7 +2,7 @@
 #include <math.h>
 #include <assert.h>
 
-#include "QCPHelpers/qcpxonedirslidingrect.h"
+#include "qcpxonedirslidingrect.h"
 #include "singlehistogram.h"
 #include "ui_singlehistogram.h"
 
@@ -14,7 +14,7 @@ SingleHistogram::SingleHistogram(QWidget *parent) :
     initPlot();
     initBorders();
 
-    // Todo: test zoom
+    // Todo: implement zoom in the plot
     // setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
 }
 

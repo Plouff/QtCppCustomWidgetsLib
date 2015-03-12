@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>220</width>
-    <height>542</height>
+    <width>218</width>
+    <height>518</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -35,8 +35,8 @@
        </property>
       </widget>
      </item>
-     <item alignment="Qt::AlignTop">
-      <widget class="SingleHistogram" name="rgbHist" native="true">
+     <item>
+      <widget class="HistoWithEditboxes" name="rgbHist" native="true">
        <property name="minimumSize">
         <size>
          <width>200</width>
@@ -65,7 +65,7 @@
       </widget>
      </item>
      <item>
-      <widget class="SingleHistogram" name="redHist" native="true">
+      <widget class="HistoWithEditboxes" name="redHist" native="true">
        <property name="minimumSize">
         <size>
          <width>200</width>
@@ -94,7 +94,7 @@
       </widget>
      </item>
      <item>
-      <widget class="SingleHistogram" name="greenHist" native="true">
+      <widget class="HistoWithEditboxes" name="greenHist" native="true">
        <property name="minimumSize">
         <size>
          <width>200</width>
@@ -123,7 +123,7 @@
       </widget>
      </item>
      <item>
-      <widget class="SingleHistogram" name="blueHist" native="true">
+      <widget class="HistoWithEditboxes" name="blueHist" native="true">
        <property name="minimumSize">
         <size>
          <width>200</width>
@@ -138,9 +138,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>SingleHistogram</class>
+   <class>HistoWithEditboxes</class>
    <extends>QWidget</extends>
-   <header>singlehistogram.h</header>
+   <header>histowitheditboxes.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

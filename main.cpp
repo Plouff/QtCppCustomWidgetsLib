@@ -12,9 +12,9 @@ int main(int argc, char *argv[])
     HistoWithEditboxes histBoxed;
 
 
-//    histmgr.show();
+    histmgr.show();
 //    hist.show();
-    histBoxed.show();
+//    histBoxed.show();
 
     return app.exec();
 }

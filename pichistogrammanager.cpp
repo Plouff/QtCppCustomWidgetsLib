@@ -14,13 +14,13 @@ PicHistogramManager::PicHistogramManager(QWidget *parent) :
 
 void PicHistogramManager::initWidget()
 {
-    SingleHistogram *rgbHist = ui->rgbHist;
-    SingleHistogram *redHist = ui->redHist;
-    SingleHistogram *greenHist = ui->greenHist;
-    SingleHistogram *blueHist = ui->blueHist;
+    HistoWithEditboxes *rgbHist = ui->rgbHist;
+    HistoWithEditboxes *redHist = ui->redHist;
+    HistoWithEditboxes *greenHist = ui->greenHist;
+    HistoWithEditboxes *blueHist = ui->blueHist;
 
     // Create a vector containing the histogram plots
-    SingleHistogram *hists[4] = { rgbHist, redHist, greenHist, blueHist};
+    HistoWithEditboxes *hists[4] = { rgbHist, redHist, greenHist, blueHist};
 
 //    // generate some data:
 //    QVector<double> x(101), y(101); // initialize with entries 0..100
