@@ -2,7 +2,7 @@
 #define PICHISTOGRAM_H
 
 #include <QWidget>
-#include "qcustomplot.h"
+//#include "qcustomplot.h"
 
 namespace Ui {
 class PicHistogram;
@@ -14,6 +14,7 @@ class PicHistogramManager : public QWidget
 public:
     explicit PicHistogramManager(QWidget *parent = 0);
     ~PicHistogramManager();
+    void initWidget();
 
 signals:
 
@@ -21,7 +22,6 @@ public slots:
 
 private:
     Ui::PicHistogram *ui;
-    void initWidget();
 };
 
 #endif // PICHISTOGRAM_H

@@ -12,24 +12,27 @@ TEMPLATE = app
 #CONFIG += staticlib
 
 INCLUDEPATH += ../../QtExternalLibs/qcustomplot \
+    PicHistogramManager \
     PicHistogramManager/SingleHistogram
 
 SOURCES += main.cpp \
     qtcppcustomwidgets.cpp \
     ../../QtExternalLibs/qcustomplot/qcustomplot.cpp \
-    pichistogrammanager.cpp \
+    PicHistogramManager/pichistogrammanager.cpp \
     PicHistogramManager/SingleHistogram/qcpxonedirslidingrect.cpp \
     PicHistogramManager/SingleHistogram/singlehistogram.cpp \
-    PicHistogramManager/SingleHistogram/histowitheditboxes.cpp
+    PicHistogramManager/SingleHistogram/histowitheditboxes.cpp \
+    PicHistogramManager/SingleHistogram/fillcolorbehav.cpp
 
 
 
 HEADERS += qtcppcustomwidgets.h \
     ../../QtExternalLibs/qcustomplot/qcustomplot.h \
-    pichistogrammanager.h \
+    PicHistogramManager/pichistogrammanager.h \
     PicHistogramManager/SingleHistogram/singlehistogram.h \
     PicHistogramManager/SingleHistogram/qcpxonedirslidingrect.h \
-    PicHistogramManager/SingleHistogram/histowitheditboxes.h
+    PicHistogramManager/SingleHistogram/histowitheditboxes.h \
+    PicHistogramManager/SingleHistogram/fillcolorbehav.h
 unix {
     target.path = /usr/lib
     INSTALLS += target
@@ -41,6 +44,6 @@ CONFIG += c++11
 
 FORMS += \
     PicHistogramManager/SingleHistogram/singlehistogram.ui \
-    PicHistogramManager/pichistogram.ui \
-    PicHistogramManager/SingleHistogram/histowitheditboxes.ui
+    PicHistogramManager/SingleHistogram/histowitheditboxes.ui \
+    PicHistogramManager/pichistogram.ui
 

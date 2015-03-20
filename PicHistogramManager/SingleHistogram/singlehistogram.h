@@ -2,6 +2,7 @@
 #define SINGLEHISTOGRAM_H
 
 #include "qcustomplot.h"
+#include "fillcolorbehav.h"
 
 class QCPXOneDirSlidingRect;
 
@@ -14,6 +15,7 @@ public:
     void updateCoord(QCPXOneDirSlidingRect *rect, int newCoord);
     int getUserInputMin();
     int getUserInputMax();
+    void updateRectFill(FillColorBehav *rectFiller);
 
 signals:
     void newMinFromHist(int min);
@@ -26,11 +28,12 @@ public slots:
 private:
     void initPlot();
     void initBorders();
-    void initBorder(QCPXOneDirSlidingRect *rect);
+    void fillBorders(QCPXOneDirSlidingRect *leftRect, QCPXOneDirSlidingRect *rightRect);
     QCPXOneDirSlidingRect * leftRect;
     QCPXOneDirSlidingRect * rightRect;
     int leftBorderCoord;
     int rightBorderCoord;
+    FillColorBehav * rectFiller;
 
 private slots:
 

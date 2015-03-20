@@ -1,5 +1,9 @@
-﻿#include "pichistogrammanager.h"
+﻿#include "fillcolorbehav.h"
+#include "histowitheditboxes.h"
+#include "pichistogrammanager.h"
 #include "ui_pichistogram.h"
+#include <iostream>
+#include <typeinfo>
 
 using namespace std;
 
@@ -18,6 +22,11 @@ void PicHistogramManager::initWidget()
     HistoWithEditboxes *redHist = ui->redHist;
     HistoWithEditboxes *greenHist = ui->greenHist;
     HistoWithEditboxes *blueHist = ui->blueHist;
+
+    rgbHist->updateRectFill(new GrayFiller());
+    redHist->updateRectFill(new RedFiller());
+    greenHist->updateRectFill(new GreenFiller());
+    blueHist->updateRectFill(new BlueFiller());
 
     // Create a vector containing the histogram plots
     HistoWithEditboxes *hists[4] = { rgbHist, redHist, greenHist, blueHist};

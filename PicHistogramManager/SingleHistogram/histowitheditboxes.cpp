@@ -20,6 +20,13 @@ HistoWithEditboxes::~HistoWithEditboxes()
     delete ui;
 }
 
+void HistoWithEditboxes::updateRectFill(FillColorBehav *rectFiller)
+{
+    ui->hist->updateRectFill(rectFiller);
+}
+
+
+
 void HistoWithEditboxes::setMinInTextBox(int min)
 {
     ui->minBox->setValue(min);

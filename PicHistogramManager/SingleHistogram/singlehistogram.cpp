@@ -20,7 +20,7 @@ SingleHistogram::SingleHistogram(QWidget *parent) :
 
 SingleHistogram::~SingleHistogram()
 {
-
+    delete rectFiller;
 }
 
 void SingleHistogram::updateCoord(QCPXOneDirSlidingRect *rect, int newCoord)
@@ -48,6 +48,12 @@ int SingleHistogram::getUserInputMin()
 int SingleHistogram::getUserInputMax()
 {
     return rightRect->getXCoord();
+}
+
+void SingleHistogram::updateRectFill(FillColorBehav *rectFiller)
+{
+    this->rectFiller = rectFiller;
+    fillBorders(leftRect, rightRect);
 }
 
 void SingleHistogram::setUserInputMin(int value)
@@ -100,20 +106,21 @@ void SingleHistogram::initBorders()
                 this, -7000, 7000, 0, -7000, 0, 255,
                 mainCoord::rightX, xAxis);
     leftBorderCoord = 0;
-    initBorder(leftRect);
 
     // Right rectangle
     rightRect  = new QCPXOneDirSlidingRect(
                 this, 255, 7000, 7000, -7000, 0, 255,
                 mainCoord::leftX, xAxis);
     rightBorderCoord = 255;
-    initBorder(rightRect);
 }
 
-void SingleHistogram::initBorder(QCPXOneDirSlidingRect *rect)
+void SingleHistogram::fillBorders(QCPXOneDirSlidingRect *leftRect, QCPXOneDirSlidingRect *rightRect)
 {
-    this->addItem(rect);
-    // Create fill pattern
-    const QBrush * brush = new QBrush(Qt::darkGray);
-    rect->setBrush(*brush);
+    this->addItem(leftRect);
+    // Fill with light color
+    rectFiller->fillDark(leftRect);
+
+    this->addItem(rightRect);
+    // Fill with light color
+    rectFiller->fillLight(rightRect);
 }
