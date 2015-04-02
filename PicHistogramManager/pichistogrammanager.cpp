@@ -29,7 +29,7 @@ void PicHistogramManager::initWidget()
     blueHist->updateRectFill(new BlueFiller());
 
     // Create a vector containing the histogram plots
-    HistoWithEditboxes *hists[4] = { rgbHist, redHist, greenHist, blueHist};
+//    HistoWithEditboxes *hists[4] = { rgbHist, redHist, greenHist, blueHist};
 
 //    // generate some data:
 //    QVector<double> x(101), y(101); // initialize with entries 0..100

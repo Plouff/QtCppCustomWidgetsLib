@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui widgets testlib printsupport
+QT       += core gui widgets testlib printsupport opengl
 
 TARGET = QtCppCustomWidgets
 TEMPLATE = app
@@ -36,6 +36,8 @@ LIBS += -lopencv_core300 \
 #        -lopencv_videoio300\
 #        -lopencv_videostab300
 
+##################################################
+
 INCLUDEPATH += ../../QtExternalLibs/qcustomplot \
     PicHistogramManager \
     PicHistogramManager/SingleHistogram
@@ -48,7 +50,9 @@ SOURCES += main.cpp \
     PicHistogramManager/SingleHistogram/singlehistogram.cpp \
     PicHistogramManager/SingleHistogram/histowitheditboxes.cpp \
     PicHistogramManager/SingleHistogram/fillcolorbehav.cpp \
-    PicViewerWithHistUpdates/picviewerwithhistupdates.cpp
+    PicViewerWithHistUpdates/picviewerwithhistupdates.cpp \
+    smalldemos.cpp \
+    Shared/openglpicviewer.cpp
 
 
 
@@ -59,7 +63,9 @@ HEADERS += qtcppcustomwidgets.h \
     PicHistogramManager/SingleHistogram/qcpxonedirslidingrect.h \
     PicHistogramManager/SingleHistogram/histowitheditboxes.h \
     PicHistogramManager/SingleHistogram/fillcolorbehav.h \
-    PicViewerWithHistUpdates/picviewerwithhistupdates.h
+    PicViewerWithHistUpdates/picviewerwithhistupdates.h \
+    Shared/openglpicviewer.h \
+    debugmacros.h
 unix {
     target.path = /usr/lib
     INSTALLS += target
