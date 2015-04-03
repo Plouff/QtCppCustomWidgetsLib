@@ -52,7 +52,8 @@ LIBS += -lopencv_core300 \
 
 INCLUDEPATH += ../../QtExternalLibs/qcustomplot \
     PicHistogramManager \
-    PicHistogramManager/SingleHistogram
+    PicHistogramManager/SingleHistogram \
+    Shared
 
 SOURCES += main.cpp \
     qtcppcustomwidgets.cpp \
@@ -64,7 +65,8 @@ SOURCES += main.cpp \
     PicHistogramManager/SingleHistogram/fillcolorbehav.cpp \
     PicViewerWithHistUpdates/picviewerwithhistupdates.cpp \
     smalldemos.cpp \
-    Shared/openglpicviewer.cpp
+    Shared/openglpicviewer.cpp \
+    Shared/glpicviewerwithcommands.cpp
 
 
 
@@ -77,7 +79,8 @@ HEADERS += qtcppcustomwidgets.h \
     PicHistogramManager/SingleHistogram/fillcolorbehav.h \
     PicViewerWithHistUpdates/picviewerwithhistupdates.h \
     Shared/openglpicviewer.h \
-    debugmacros.h
+    debugmacros.h \
+    Shared/glpicviewerwithcommands.h
 unix {
     target.path = /usr/lib
     INSTALLS += target
@@ -87,5 +90,6 @@ FORMS += \
     PicHistogramManager/SingleHistogram/singlehistogram.ui \
     PicHistogramManager/SingleHistogram/histowitheditboxes.ui \
     PicHistogramManager/pichistogram.ui \
-    PicViewerWithHistUpdates/picviewerwithhistupdates.ui
+    PicViewerWithHistUpdates/picviewerwithhistupdates.ui \
+    Shared/glpicviewerwithcommands.ui
 

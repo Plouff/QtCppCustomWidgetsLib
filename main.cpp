@@ -2,6 +2,8 @@
 #include "singlehistogram.h"
 #include "histowitheditboxes.h"
 #include "Shared/openglpicviewer.h"
+#include "glpicviewerwithcommands.h"
+#include "debugmacros.h"
 
 #include <QApplication>
 #include <QtWidgets>
@@ -21,8 +23,9 @@ int main(int argc, char *argv[])
     OpenGLPicViewer * openGLPicIgnoreAR;
     OpenGLPicViewer * openGLPicKeepAR;
     OpenGLPicViewer * openGLPicKeepARExpand;
+    GLPicViewerWithCommands * picViewCmds;
 
-    int demoSelect = 5;
+    int demoSelect = 6;
 
     switch (demoSelect)
     {
@@ -75,6 +78,14 @@ int main(int argc, char *argv[])
         openGLPicKeepAR->show();
         openGLPicKeepARExpand->show();
 
+        return app.exec();
+        break;
+
+    case 6:
+        // Basic QOpenGLWidget demo
+        picViewCmds = new GLPicViewerWithCommands();
+        picViewCmds->setPixmapWithPath("D:/Uluru.jpg");
+        picViewCmds->show();
         return app.exec();
         break;
     }

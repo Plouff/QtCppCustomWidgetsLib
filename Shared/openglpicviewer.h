@@ -16,7 +16,7 @@ public:
     void setPixmap(const QPixmap &p);
     void setPixmapWithPath(QString path);
     virtual void paintEvent(QPaintEvent *ev);
-    void computeScale(int neww, int newh);
+    void computeScaler(int neww, int newh);
     void updatePixmapSize();
 
     Qt::AspectRatioMode getAspectRatioMode() const;
@@ -25,7 +25,7 @@ public:
 protected:
     void resizeGL(int w, int h);
     const QPixmap *pixmap;
-    QSize pixmapsize;
+    QSize pixmapsizescaled;
     QTransform scaler;
     Qt::AspectRatioMode aspectRatioMode;
 };

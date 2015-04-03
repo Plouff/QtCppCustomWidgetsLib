@@ -31,7 +31,7 @@ void OpenGLPicViewer::setPixmapWithPath(QString path)
 
 void OpenGLPicViewer::updatePixmapSize()
 {
-    pixmapsize = QSize(pixmap->width(), pixmap->height());
+    pixmapsizescaled = QSize(pixmap->width(), pixmap->height());
 }
 
 void OpenGLPicViewer::resizeGL(int w, int h)
@@ -39,7 +39,7 @@ void OpenGLPicViewer::resizeGL(int w, int h)
     if (!pixmap)
         return;
     else
-        computeScale(w, h);
+        computeScaler(w, h);
 }
 
 Qt::AspectRatioMode OpenGLPicViewer::getAspectRatioMode() const
@@ -49,7 +49,13 @@ Qt::AspectRatioMode OpenGLPicViewer::getAspectRatioMode() const
 
 void OpenGLPicViewer::setAspectRatioMode(const Qt::AspectRatioMode &value)
 {
-    aspectRatioMode = value;
+    if (aspectRatioMode != value)
+    {
+        aspectRatioMode = value;
+        updatePixmapSize();
+        computeScaler(width(), height());
+        repaint();
+    }
 }
 
 void OpenGLPicViewer::paintEvent(QPaintEvent *ev)
@@ -65,20 +71,21 @@ void OpenGLPicViewer::paintEvent(QPaintEvent *ev)
     painter.setRenderHint(QPainter::SmoothPixmapTransform);
 
     painter.setWorldTransform(scaler);
+// Could be used as a template to optimize the updated area
 //    QRect damaged = scalerI.mapRect(ev->rect());
 //    painter.drawPixmap(damaged, *pixmap, damaged);
     painter.drawPixmap(0, 0, *pixmap);
 }
 
-void OpenGLPicViewer::computeScale(int neww, int newh)
+void OpenGLPicViewer::computeScaler(int neww, int newh)
 {
     if (!pixmap)
         return;
     else
     {
-        pixmapsize.scale(neww, newh, aspectRatioMode);
-        qreal xratio = pixmapsize.width() / (qreal)pixmap->width();
-        qreal yratio = pixmapsize.height() / (qreal)pixmap->height();
+        pixmapsizescaled.scale(neww, newh, aspectRatioMode);
+        qreal xratio = pixmapsizescaled.width() / (qreal)pixmap->width();
+        qreal yratio = pixmapsizescaled.height() / (qreal)pixmap->height();
 
         // Create the scaler with previous ratios
         scaler = QTransform();
