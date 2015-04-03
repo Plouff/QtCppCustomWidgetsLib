@@ -17,10 +17,13 @@ public:
     void setPixmapWithPath(QString path);
     virtual void paintEvent(QPaintEvent *ev);
     void computeScaler(int neww, int newh);
-    void updatePixmapSize();
+    void resetPixmapSize();
 
     Qt::AspectRatioMode getAspectRatioMode() const;
     void setAspectRatioMode(const Qt::AspectRatioMode &value);
+
+public slots:
+    void update();
 
 protected:
     void resizeGL(int w, int h);
@@ -28,6 +31,9 @@ protected:
     QSize pixmapsizescaled;
     QTransform scaler;
     Qt::AspectRatioMode aspectRatioMode;
+
+private:
+    typedef QOpenGLWidget super;
 };
 
 #endif // OPENGLPICVIEWER_H

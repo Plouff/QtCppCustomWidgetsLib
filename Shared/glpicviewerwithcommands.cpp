@@ -2,16 +2,14 @@
 #include "ui_glpicviewerwithcommands.h"
 #include "debugmacros.h"
 
-GLPicViewerWithCommands::GLPicViewerWithCommands(
-        QWidget *parent) :
+GLPicViewerWithCommands::GLPicViewerWithCommands(QWidget *parent, Qt::AspectRatioMode initialAspectRatio) :
     QWidget(parent),
     ui(new Ui::GLPicViewerWithCommands)
 {
     ui->setupUi(this);
 
-    // Fit by default
-    ui->radioFit->setChecked(true);
-    ui->picViewer->setAspectRatioMode(Qt::KeepAspectRatio);
+    // Set default aspect ratio
+    setAspectRatio(initialAspectRatio);
 
     // Connect signals/slots
     connect(ui->aspectRatioGroup, SIGNAL(buttonClicked(QAbstractButton*)),

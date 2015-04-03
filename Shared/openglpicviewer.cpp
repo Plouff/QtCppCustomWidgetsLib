@@ -8,6 +8,9 @@
 OpenGLPicViewer::OpenGLPicViewer(QWidget *parent, Qt::AspectRatioMode ratiomode) :
     QOpenGLWidget(parent), pixmap(NULL), aspectRatioMode(ratiomode)
 {
+    setAutoFillBackground(true);
+    scaler = QTransform();
+    pixmapsizescaled = QSize();
 }
 
 OpenGLPicViewer::~OpenGLPicViewer()
@@ -18,20 +21,19 @@ OpenGLPicViewer::~OpenGLPicViewer()
 void OpenGLPicViewer::setPixmap(const QPixmap &p)
 {
     pixmap = &p;
-    updatePixmapSize();
-    resizeEvent(0);
     update();
 }
 
 void OpenGLPicViewer::setPixmapWithPath(QString path)
 {
     pixmap = new QPixmap(path);
-    updatePixmapSize();
+    update();
 }
 
-void OpenGLPicViewer::updatePixmapSize()
+void OpenGLPicViewer::resetPixmapSize()
 {
-    pixmapsizescaled = QSize(pixmap->width(), pixmap->height());
+    pixmapsizescaled.setWidth(pixmap->width());
+    pixmapsizescaled.setHeight(pixmap->height());
 }
 
 void OpenGLPicViewer::resizeGL(int w, int h)
@@ -52,9 +54,8 @@ void OpenGLPicViewer::setAspectRatioMode(const Qt::AspectRatioMode &value)
     if (aspectRatioMode != value)
     {
         aspectRatioMode = value;
-        updatePixmapSize();
-        computeScaler(width(), height());
-        repaint();
+        update();
+
     }
 }
 
@@ -64,7 +65,7 @@ void OpenGLPicViewer::paintEvent(QPaintEvent *ev)
 
     QPainter painter(this);
     if (!pixmap) {
-        painter.fillRect(this->rect(), QBrush(Qt::blue, Qt::BDiagPattern));
+        painter.fillRect(this->rect(), QBrush(Qt::darkGray, Qt::BDiagPattern));
         return;
     }
 
@@ -83,13 +84,30 @@ void OpenGLPicViewer::computeScaler(int neww, int newh)
         return;
     else
     {
+        // We must reset to cope with rounding when scaling to a very small size
+        // Indeed the rounding alters the aspect ratio with the pictures is enlarged again.
+        resetPixmapSize();
         pixmapsizescaled.scale(neww, newh, aspectRatioMode);
         qreal xratio = pixmapsizescaled.width() / (qreal)pixmap->width();
         qreal yratio = pixmapsizescaled.height() / (qreal)pixmap->height();
 
-        // Create the scaler with previous ratios
-        scaler = QTransform();
+        // Set the scaler with previous ratios
+        scaler.reset();
         scaler.scale(xratio, yratio);
 //        scalerI = scaler.inverted();
+    }
+}
+
+//############################################
+//############################################
+// Public Slots
+//############################################
+//############################################
+void OpenGLPicViewer::update()
+{
+    if (pixmap != nullptr && isVisible() == true)
+    {
+        computeScaler(width(), height());
+        super::update();
     }
 }

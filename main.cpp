@@ -83,9 +83,10 @@ int main(int argc, char *argv[])
 
     case 6:
         // Basic QOpenGLWidget demo
-        picViewCmds = new GLPicViewerWithCommands();
+        picViewCmds = new GLPicViewerWithCommands(0, Qt::KeepAspectRatio);
         picViewCmds->setPixmapWithPath("D:/Uluru.jpg");
         picViewCmds->show();
+//        picViewCmds->setPixmapWithPath("D:/lena.png");
         return app.exec();
         break;
     }

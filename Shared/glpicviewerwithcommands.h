@@ -13,7 +13,9 @@ class GLPicViewerWithCommands : public QWidget
     Q_OBJECT
 
 public:
-    explicit GLPicViewerWithCommands(QWidget *parent = 0);
+    explicit GLPicViewerWithCommands(
+            QWidget *parent = 0,
+            Qt::AspectRatioMode initialAspectRatio = Qt::KeepAspectRatio);
     ~GLPicViewerWithCommands();
     void setPixmapWithPath(QString path);
     void setAspectRatio(Qt::AspectRatioMode aspectRatio);
