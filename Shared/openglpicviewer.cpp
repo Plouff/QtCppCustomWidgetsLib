@@ -8,7 +8,6 @@
 OpenGLPicViewer::OpenGLPicViewer(QWidget *parent, Qt::AspectRatioMode ratiomode) :
     QOpenGLWidget(parent), pixmap(NULL), aspectRatioMode(ratiomode)
 {
-    pixmap = new QPixmap("D:/Uluru.jpg");
 }
 
 OpenGLPicViewer::~OpenGLPicViewer()
@@ -19,8 +18,20 @@ OpenGLPicViewer::~OpenGLPicViewer()
 void OpenGLPicViewer::setPixmap(const QPixmap &p)
 {
     pixmap = &p;
+    updatePixmapSize();
     resizeEvent(0);
     update();
+}
+
+void OpenGLPicViewer::setPixmapWithPath(QString path)
+{
+    pixmap = new QPixmap(path);
+    updatePixmapSize();
+}
+
+void OpenGLPicViewer::updatePixmapSize()
+{
+    pixmapsize = QSize(pixmap->width(), pixmap->height());
 }
 
 void OpenGLPicViewer::resizeGL(int w, int h)
@@ -28,11 +39,9 @@ void OpenGLPicViewer::resizeGL(int w, int h)
     if (!pixmap)
         return;
     else
-    {
-//        glViewport(0,0, w, h);
         computeScale(w, h);
-    }
 }
+
 Qt::AspectRatioMode OpenGLPicViewer::getAspectRatioMode() const
 {
     return aspectRatioMode;
@@ -67,17 +76,13 @@ void OpenGLPicViewer::computeScale(int neww, int newh)
         return;
     else
     {
-        QSize coords = QSize(pixmap->width(), pixmap->height());
-        coords.scale(neww, newh, aspectRatioMode);
-        qreal xratio = coords.width() / (qreal)pixmap->width();
-        qreal yratio = coords.height() / (qreal)pixmap->height();
+        pixmapsize.scale(neww, newh, aspectRatioMode);
+        qreal xratio = pixmapsize.width() / (qreal)pixmap->width();
+        qreal yratio = pixmapsize.height() / (qreal)pixmap->height();
 
-//        DBGPRINT(xratio)
-//        DBGPRINT(yratio)
-//        ENDLFLUSH
-
+        // Create the scaler with previous ratios
         scaler = QTransform();
         scaler.scale(xratio, yratio);
-        scalerI = scaler.inverted();
+//        scalerI = scaler.inverted();
     }
 }

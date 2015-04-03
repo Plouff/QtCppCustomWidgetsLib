@@ -4,12 +4,20 @@
 #
 #-------------------------------------------------
 
-QT       += core gui widgets testlib printsupport opengl
+##################################################
+# GENERAL CONFIG #################################
+##################################################
+
+QT       += core gui widgets testlib printsupport
 
 TARGET = QtCppCustomWidgets
 TEMPLATE = app
 #TEMPLATE = lib
 #CONFIG += staticlib
+
+# C++11 support
+CONFIG += c++11
+
 
 ##################################################
 # OPENCV LIB #####################################
@@ -36,6 +44,10 @@ LIBS += -lopencv_core300 \
 #        -lopencv_videoio300\
 #        -lopencv_videostab300
 
+##################################################
+
+##################################################
+# PROJECT SRC ####################################
 ##################################################
 
 INCLUDEPATH += ../../QtExternalLibs/qcustomplot \
@@ -70,10 +82,6 @@ unix {
     target.path = /usr/lib
     INSTALLS += target
 }
-
-# C++11 support
-CONFIG += c++11
-#QMAKE_CXXFLAGS += -std=c++0x
 
 FORMS += \
     PicHistogramManager/SingleHistogram/singlehistogram.ui \

@@ -63,6 +63,10 @@ int main(int argc, char *argv[])
         openGLPicKeepAR = new OpenGLPicViewer();
         openGLPicKeepARExpand = new OpenGLPicViewer();
 
+        openGLPicIgnoreAR->setPixmapWithPath("D:/Uluru.jpg");
+        openGLPicKeepAR->setPixmapWithPath("D:/Uluru.jpg");
+        openGLPicKeepARExpand->setPixmapWithPath("D:/Uluru.jpg");
+
         openGLPicIgnoreAR->setAspectRatioMode(Qt::IgnoreAspectRatio);
         openGLPicKeepAR->setAspectRatioMode(Qt::KeepAspectRatio);
         openGLPicKeepARExpand->setAspectRatioMode(Qt::KeepAspectRatioByExpanding);

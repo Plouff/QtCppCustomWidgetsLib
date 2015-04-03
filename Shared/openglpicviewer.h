@@ -3,8 +3,6 @@
 
 #include <QOpenGLWidget>
 
-enum class scaleMode {fit, expand, fill};
-
 // Qt::AspectRatioMode: IgnoreAspectRatio, KeepAspectRatio, KeepAspectRatioByExpanding
 
 class OpenGLPicViewer : public QOpenGLWidget
@@ -16,8 +14,10 @@ public:
                     Qt::AspectRatioMode aspectRatioMode = Qt::KeepAspectRatio);
     ~OpenGLPicViewer();
     void setPixmap(const QPixmap &p);
+    void setPixmapWithPath(QString path);
     virtual void paintEvent(QPaintEvent *ev);
     void computeScale(int neww, int newh);
+    void updatePixmapSize();
 
     Qt::AspectRatioMode getAspectRatioMode() const;
     void setAspectRatioMode(const Qt::AspectRatioMode &value);
@@ -25,8 +25,8 @@ public:
 protected:
     void resizeGL(int w, int h);
     const QPixmap *pixmap;
-    qreal scale;
-    QTransform scaler, scalerI;
+    QSize pixmapsize;
+    QTransform scaler;
     Qt::AspectRatioMode aspectRatioMode;
 };
 
