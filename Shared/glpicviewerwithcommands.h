@@ -24,7 +24,7 @@ private:
     Ui::GLPicViewerWithCommands *ui;
 
 protected slots:
-    void _updateAspectRatio(QAbstractButton * button);
+    void updateAspectRatio(QAbstractButton * button);
 };
 
 #endif // GLPICVIEWERWITHCOMMANDS_H

@@ -2,7 +2,8 @@
 #include "ui_glpicviewerwithcommands.h"
 #include "debugmacros.h"
 
-GLPicViewerWithCommands::GLPicViewerWithCommands(QWidget *parent, Qt::AspectRatioMode initialAspectRatio) :
+GLPicViewerWithCommands::GLPicViewerWithCommands(
+        QWidget *parent, Qt::AspectRatioMode initialAspectRatio) :
     QWidget(parent),
     ui(new Ui::GLPicViewerWithCommands)
 {
@@ -13,7 +14,7 @@ GLPicViewerWithCommands::GLPicViewerWithCommands(QWidget *parent, Qt::AspectRati
 
     // Connect signals/slots
     connect(ui->aspectRatioGroup, SIGNAL(buttonClicked(QAbstractButton*)),
-            this, SLOT(_updateAspectRatio(QAbstractButton*)));
+            this, SLOT(updateAspectRatio(QAbstractButton*)));
 }
 
 GLPicViewerWithCommands::~GLPicViewerWithCommands()
@@ -51,7 +52,7 @@ void GLPicViewerWithCommands::setAspectRatio(Qt::AspectRatioMode aspectRatio)
 //############################################
 //############################################
 
-void GLPicViewerWithCommands::_updateAspectRatio(QAbstractButton *button)
+void GLPicViewerWithCommands::updateAspectRatio(QAbstractButton *button)
 {
     if(button == ui->radioFit)
     {

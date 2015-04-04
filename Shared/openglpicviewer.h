@@ -3,7 +3,8 @@
 
 #include <QOpenGLWidget>
 
-// Qt::AspectRatioMode: IgnoreAspectRatio, KeepAspectRatio, KeepAspectRatioByExpanding
+// Qt::AspectRatioMode: IgnoreAspectRatio, KeepAspectRatio,
+// KeepAspectRatioByExpanding
 
 class OpenGLPicViewer : public QOpenGLWidget
 {
@@ -11,7 +12,8 @@ class OpenGLPicViewer : public QOpenGLWidget
 
 public:
     OpenGLPicViewer(QWidget *parent = 0,
-                    Qt::AspectRatioMode aspectRatioMode = Qt::KeepAspectRatio);
+                    Qt::AspectRatioMode aspectRatioMode = Qt::KeepAspectRatio,
+                    bool enableDragDrop = true);
     ~OpenGLPicViewer();
     void setPixmap(const QPixmap &p);
     void setPixmapWithPath(QString path);
@@ -27,10 +29,23 @@ public slots:
 
 protected:
     void resizeGL(int w, int h);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+
+    void constrainDrawingOrigin();
+
     const QPixmap *pixmap;
     QSize pixmapsizescaled;
     QTransform scaler;
     Qt::AspectRatioMode aspectRatioMode;
+    bool dragDropEnabled;
+
+    // Drawing origin management
+    QPoint drawingOrigin;
+    QPoint lastDrawingOrigin;
+    QPoint mouseClicOrigin;
+    bool beingDragged;
 
 private:
     typedef QOpenGLWidget super;

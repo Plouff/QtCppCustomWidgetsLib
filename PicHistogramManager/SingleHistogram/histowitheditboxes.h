@@ -20,12 +20,14 @@ public:
 
 private:
     Ui::HistoWithEditboxes *ui;
+
+protected:
     void setMinInTextBox(int min);
     void setMaxInTextBox(int max);
     void connectSignals();
 
 
-private slots:
+protected slots:
     void updateMinFromHist(int min);
     void updateMaxFromHist(int max);
     void setMaxToSpinBox(int max);
