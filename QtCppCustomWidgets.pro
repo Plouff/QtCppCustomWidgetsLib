@@ -67,7 +67,7 @@ SOURCES += main.cpp \
     smalldemos.cpp \
     Shared/openglpicviewer.cpp \
     Shared/glpicviewerwithcommands.cpp \
-    Shared/opencvglpicviewer.cpp
+    Shared/cvmat2qpixmapconverter.cpp
 
 
 
@@ -82,8 +82,8 @@ HEADERS += qtcppcustomwidgets.h \
     Shared/openglpicviewer.h \
     debugmacros.h \
     Shared/glpicviewerwithcommands.h \
-    Shared/opencvglpicviewer.h \
-    Shared/opencvhelpers.h
+    Shared/opencvhelpers.h \
+    Shared/cvmat2qpixmapconverter.h
 unix {
     target.path = /usr/lib
     INSTALLS += target

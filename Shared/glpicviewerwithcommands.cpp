@@ -15,6 +15,8 @@ GLPicViewerWithCommands::GLPicViewerWithCommands(
     // Connect signals/slots
     connect(ui->aspectRatioGroup, SIGNAL(buttonClicked(QAbstractButton*)),
             this, SLOT(updateAspectRatio(QAbstractButton*)));
+
+    cvMat2QPixmap = nullptr;
 }
 
 GLPicViewerWithCommands::~GLPicViewerWithCommands()
@@ -25,6 +27,26 @@ GLPicViewerWithCommands::~GLPicViewerWithCommands()
 void GLPicViewerWithCommands::setPixmapWithPath(QString path)
 {
     ui->picViewer->setPixmapWithPath(path);
+}
+
+void GLPicViewerWithCommands::setCvMat(cv::Mat &pMat)
+{
+    if (!cvMat2QPixmap)
+        // Add a cv::Mat to QPixmap converter
+        cvMat2QPixmap = new cvMat2QPixmapConverter(this);
+
+    pixmap = cvMat2QPixmap->convert(pMat);
+    ui->picViewer->setPixmap(*pixmap);
+}
+
+void GLPicViewerWithCommands::setCvMatWithPath(const cv::String path)
+{
+    if (!cvMat2QPixmap)
+        // Add a cv::Mat to QPixmap converter
+        cvMat2QPixmap = new cvMat2QPixmapConverter(this);
+
+    pixmap = cvMat2QPixmap->convertFromPath(path);
+    ui->picViewer->setPixmap(*pixmap);
 }
 
 void GLPicViewerWithCommands::setAspectRatio(Qt::AspectRatioMode aspectRatio)

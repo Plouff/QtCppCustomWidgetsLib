@@ -3,7 +3,6 @@
 #include "histowitheditboxes.h"
 #include "pichistogrammanager.h"
 #include "Shared/openglpicviewer.h"
-#include "Shared/opencvglpicviewer.h"
 #include "singlehistogram.h"
 
 #include <QApplication>
@@ -25,7 +24,6 @@ int main(int argc, char *argv[])
     OpenGLPicViewer * openGLPicKeepAR;
     OpenGLPicViewer * openGLPicKeepARExpand;
     GLPicViewerWithCommands * picViewCmds;
-    OpenCVGLPicViewer * cvViewer;
 
     int demoSelect = 7;
 
@@ -84,7 +82,7 @@ int main(int argc, char *argv[])
         break;
 
     case 6:
-        // Basic QOpenGLWidget demo
+        // GL pic viewer with commands demo
         picViewCmds = new GLPicViewerWithCommands(0, Qt::KeepAspectRatio);
         picViewCmds->setPixmapWithPath("D:/Uluru.jpg");
         picViewCmds->show();
@@ -93,12 +91,11 @@ int main(int argc, char *argv[])
         break;
 
     case 7:
-        // Basic OpenCVGLPicViewer demo
-        cvViewer = new OpenCVGLPicViewer(0, Qt::KeepAspectRatio);
-        cvViewer->setCvMatWithPath("D:/lena.png");
-        cvViewer->show();
-        cvViewer->setCvMatWithPath("D:/Uluru.jpg");
-
+        // cv::Mat convertion in GL pic viewer with commands demo
+        picViewCmds = new GLPicViewerWithCommands(0, Qt::KeepAspectRatio);
+        picViewCmds->setPixmapWithPath("D:/lena.png");
+        picViewCmds->show();
+        picViewCmds->setCvMatWithPath("D:/Uluru.jpg");
         return app.exec();
         break;
     }
