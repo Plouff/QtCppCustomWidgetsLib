@@ -4,9 +4,9 @@
 
 int openCVbasicDemo(QApplication *app)
 {
-    cv::Mat image= cv::imread("D:/IMG_9786.jpg", 1);
-    cv::namedWindow("Tulips");
-    cv::imshow("Tulips", image);
+    cv::Mat image= cv::imread("D:/Uluru.jpg", 1);
+    cv::namedWindow("Viewer");
+    cv::imshow("Viewer", image);
     cv::waitKey(1000);
     return app->exec();
 }

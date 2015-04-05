@@ -66,7 +66,8 @@ SOURCES += main.cpp \
     PicViewerWithHistUpdates/picviewerwithhistupdates.cpp \
     smalldemos.cpp \
     Shared/openglpicviewer.cpp \
-    Shared/glpicviewerwithcommands.cpp
+    Shared/glpicviewerwithcommands.cpp \
+    Shared/opencvglpicviewer.cpp
 
 
 
@@ -80,7 +81,9 @@ HEADERS += qtcppcustomwidgets.h \
     PicViewerWithHistUpdates/picviewerwithhistupdates.h \
     Shared/openglpicviewer.h \
     debugmacros.h \
-    Shared/glpicviewerwithcommands.h
+    Shared/glpicviewerwithcommands.h \
+    Shared/opencvglpicviewer.h \
+    Shared/opencvhelpers.h
 unix {
     target.path = /usr/lib
     INSTALLS += target

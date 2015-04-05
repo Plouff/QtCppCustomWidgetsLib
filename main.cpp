@@ -1,9 +1,10 @@
-#include "pichistogrammanager.h"
-#include "singlehistogram.h"
-#include "histowitheditboxes.h"
-#include "Shared/openglpicviewer.h"
-#include "glpicviewerwithcommands.h"
 #include "debugmacros.h"
+#include "glpicviewerwithcommands.h"
+#include "histowitheditboxes.h"
+#include "pichistogrammanager.h"
+#include "Shared/openglpicviewer.h"
+#include "Shared/opencvglpicviewer.h"
+#include "singlehistogram.h"
 
 #include <QApplication>
 #include <QtWidgets>
@@ -24,8 +25,9 @@ int main(int argc, char *argv[])
     OpenGLPicViewer * openGLPicKeepAR;
     OpenGLPicViewer * openGLPicKeepARExpand;
     GLPicViewerWithCommands * picViewCmds;
+    OpenCVGLPicViewer * cvViewer;
 
-    int demoSelect = 6;
+    int demoSelect = 7;
 
     switch (demoSelect)
     {
@@ -87,6 +89,16 @@ int main(int argc, char *argv[])
         picViewCmds->setPixmapWithPath("D:/Uluru.jpg");
         picViewCmds->show();
 //        picViewCmds->setPixmapWithPath("D:/lena.png");
+        return app.exec();
+        break;
+
+    case 7:
+        // Basic OpenCVGLPicViewer demo
+        cvViewer = new OpenCVGLPicViewer(0, Qt::KeepAspectRatio);
+        cvViewer->setCvMatWithPath("D:/lena.png");
+        cvViewer->show();
+        cvViewer->setCvMatWithPath("D:/Uluru.jpg");
+
         return app.exec();
         break;
     }

@@ -15,5 +15,7 @@ org.eclipse.core.resources.prefs
 /.settings
 /.project*
 
-# Other
+# Qt Creator
+*.pro.user
+
 
