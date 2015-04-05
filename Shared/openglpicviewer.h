@@ -35,7 +35,7 @@ protected:
 
     void constrainDrawingOrigin();
 
-    const QPixmap *pixmap;
+    QPixmap const * pixmap;
     QSize pixmapsizescaled;
     QTransform scaler;
     Qt::AspectRatioMode aspectRatioMode;

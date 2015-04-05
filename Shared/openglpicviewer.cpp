@@ -9,8 +9,9 @@
 #include "openglpicviewer.h"
 
 OpenGLPicViewer::OpenGLPicViewer(
-        QWidget *parent, Qt::AspectRatioMode ratiomode, bool enableDragDrop) :
-    QOpenGLWidget(parent), pixmap(nullptr), aspectRatioMode(ratiomode),
+        QWidget *parent, Qt::AspectRatioMode aspectRatioMode,
+        bool enableDragDrop) :
+    QOpenGLWidget(parent), pixmap(nullptr), aspectRatioMode(aspectRatioMode),
     dragDropEnabled(enableDragDrop)
 {
     setAutoFillBackground(true);
@@ -191,20 +192,27 @@ void OpenGLPicViewer::constrainDrawingOrigin()
     // Convert the drawing origin in Qt coordinate system
     drawingOrigin = scaler.map(drawingOrigin);
 
-    // Constraint X position
+    // Constrain X position
     int newx = drawingOrigin.x();
-    if(newx < (-pixmapsizescaled.width()+margin))
-        newx = -pixmapsizescaled.width()+margin;
-    else if(newx > width()-margin)
-        newx = width()-margin;
+    int xmin = -(pixmapsizescaled.width()-width()) - margin;
+    int xmax = 0+margin;
 
-    // Constraint X position
+    if(newx < xmin)
+        newx = xmin;
+    else if(newx > xmax)
+        newx = xmax;
+
+    // Constrain Y position
     int newy = drawingOrigin.y();
-    if(newy < (-pixmapsizescaled.height()+margin))
-        newy = -pixmapsizescaled.height()+margin;
-    else if(newy > height()-margin)
-        newy = height()-margin;
+    int ymin = -(pixmapsizescaled.height()-height()) - margin;
+    int ymax = 0+margin;
 
+    if(newy < ymin)
+        newy = ymin;
+    else if(newy > ymax)
+        newy = ymax;
+
+    // Set constrained position
     drawingOrigin.setX(newx);
     drawingOrigin.setY(newy);
 
