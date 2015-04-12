@@ -4,6 +4,8 @@
 #include <QWidget>
 //#include "qcustomplot.h"
 
+#include "fillcolorbehav.h"
+
 namespace Ui {
 class PicHistogram;
 }
@@ -19,6 +21,12 @@ public:
 signals:
 
 public slots:
+
+protected:
+    GrayFiller * grayFiller;
+    RedFiller * redFiller;
+    GreenFiller * greenFiller;
+    BlueFiller * blueFiller;
 
 private:
     Ui::PicHistogram *ui;

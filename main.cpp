@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
     OpenGLPicViewer * openGLPicKeepARExpand;
     GLPicViewerWithCommands * picViewCmds;
 
-    int demoSelect = 7;
+    int demoSelect = 1;
 
     switch (demoSelect)
     {

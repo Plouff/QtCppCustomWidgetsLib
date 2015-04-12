@@ -15,7 +15,7 @@ class HistoWithEditboxes : public QWidget
 public:
     explicit HistoWithEditboxes(QWidget *parent = 0);
     ~HistoWithEditboxes();
-    void updateRectFill(FillColorBehav *rectFiller);
+    void updateRectFill(FillColorBehav &rectFiller);
 
 
 private:

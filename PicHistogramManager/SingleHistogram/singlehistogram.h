@@ -15,7 +15,7 @@ public:
     void updateCoord(QCPXOneDirSlidingRect *rect, int newCoord);
     int getUserInputMin();
     int getUserInputMax();
-    void updateRectFill(FillColorBehav *rectFiller);
+    void updateRectFill(FillColorBehav &prectFiller);
 
 signals:
     void newMinFromHist(int min);
