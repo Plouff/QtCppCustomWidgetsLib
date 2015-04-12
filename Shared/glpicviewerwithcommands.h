@@ -6,7 +6,7 @@
 
 #include <opencv2/opencv.hpp>
 
-#include "Shared/cvmat2qpixmapconverter.h"
+#include "Shared/topixmapconverter.h"
 
 namespace Ui {
 class GLPicViewerWithCommands;
@@ -28,10 +28,10 @@ public:
     void setCvMatWithPath(cv::String const path);
 
 protected :
-    cvMat2QPixmapConverter * cvMat2QPixmap;
     cv::Mat * cvMat;
     cv::Mat localCvMat;
     QPixmap * pixmap;
+    ToQPixmapConverter * converter;
 
 private:
     Ui::GLPicViewerWithCommands *ui;

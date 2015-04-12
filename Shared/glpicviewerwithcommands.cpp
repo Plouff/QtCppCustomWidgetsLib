@@ -1,6 +1,6 @@
+#include "debugmacros.h"
 #include "glpicviewerwithcommands.h"
 #include "ui_glpicviewerwithcommands.h"
-#include "debugmacros.h"
 
 GLPicViewerWithCommands::GLPicViewerWithCommands(
         QWidget *parent, Qt::AspectRatioMode initialAspectRatio) :
@@ -12,16 +12,19 @@ GLPicViewerWithCommands::GLPicViewerWithCommands(
     // Set default aspect ratio
     setAspectRatio(initialAspectRatio);
 
+    // Init converter pointer
+    converter = nullptr;
+
     // Connect signals/slots
     connect(ui->aspectRatioGroup, SIGNAL(buttonClicked(QAbstractButton*)),
             this, SLOT(updateAspectRatio(QAbstractButton*)));
 
-    cvMat2QPixmap = nullptr;
 }
 
 GLPicViewerWithCommands::~GLPicViewerWithCommands()
 {
     delete ui;
+    delete converter;
 }
 
 void GLPicViewerWithCommands::setPixmapWithPath(QString path)
@@ -31,21 +34,19 @@ void GLPicViewerWithCommands::setPixmapWithPath(QString path)
 
 void GLPicViewerWithCommands::setCvMat(cv::Mat &pMat)
 {
-    if (!cvMat2QPixmap)
-        // Add a cv::Mat to QPixmap converter
-        cvMat2QPixmap = new cvMat2QPixmapConverter(this);
+    // Create a cv::Mat to QPixmap converter
+    converter = new FromCVMatToQPixmapConverter(this, &pMat);
 
-    pixmap = cvMat2QPixmap->convert(pMat);
+    pixmap = converter->convert();
     ui->picViewer->setPixmap(*pixmap);
 }
 
 void GLPicViewerWithCommands::setCvMatWithPath(const cv::String path)
 {
-    if (!cvMat2QPixmap)
-        // Add a cv::Mat to QPixmap converter
-        cvMat2QPixmap = new cvMat2QPixmapConverter(this);
+    // Create a cv::Mat to QPixmap converter
+    converter = new FromCVMatToQPixmapConverter(this);
 
-    pixmap = cvMat2QPixmap->convertFromPath(path);
+    pixmap = converter->convertFromPath(path);
     ui->picViewer->setPixmap(*pixmap);
 }
 

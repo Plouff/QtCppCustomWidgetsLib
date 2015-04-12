@@ -31,9 +31,9 @@ int main(int argc, char *argv[])
     {
     case 0:
         // All histogram widgets
-        histmgr.show();
+//        histmgr.show();
         hist.show();
-        histBoxed.show();
+//        histBoxed.show();
         return app.exec();
         break;
 
@@ -86,16 +86,18 @@ int main(int argc, char *argv[])
         picViewCmds = new GLPicViewerWithCommands(0, Qt::KeepAspectRatio);
         picViewCmds->setPixmapWithPath("D:/Uluru.jpg");
         picViewCmds->show();
-//        picViewCmds->setPixmapWithPath("D:/lena.png");
+        picViewCmds->setPixmapWithPath("D:/lena.png");
         return app.exec();
         break;
 
     case 7:
         // cv::Mat convertion in GL pic viewer with commands demo
-        picViewCmds = new GLPicViewerWithCommands(0, Qt::KeepAspectRatio);
-        picViewCmds->setPixmapWithPath("D:/lena.png");
+        picViewCmds = new GLPicViewerWithCommands(
+                    0, Qt::KeepAspectRatioByExpanding);
+        cv::Mat mat = cv::imread("D:/Uluru.jpg");
+        picViewCmds->setCvMat(mat);
         picViewCmds->show();
-        picViewCmds->setCvMatWithPath("D:/Uluru.jpg");
+        picViewCmds->setPixmapWithPath("D:/lena.png");
         return app.exec();
         break;
     }

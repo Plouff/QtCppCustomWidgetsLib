@@ -25,7 +25,7 @@ public slots:
     void setUserInputMin(int value);
     void setUserInputMax(int value);
 
-private:
+protected:
     void initPlot();
     void initBorders();
     void fillBorders(QCPXOneDirSlidingRect *leftRect, QCPXOneDirSlidingRect *rightRect);
