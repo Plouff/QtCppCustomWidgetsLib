@@ -2,7 +2,10 @@
 #define SINGLEHISTOGRAM_H
 
 #include "qcustomplot.h"
+#include "opencv2/opencv.hpp"
+
 #include "fillcolorbehav.h"
+#include "histogramcalculator.h"
 
 class QCPXOneDirSlidingRect;
 
@@ -16,7 +19,13 @@ public:
     int getUserInputMin();
     int getUserInputMax();
     void updateRectFill(FillColorBehav &prectFiller);
+    void displayMat(cv::Mat * pMat, int numPoints);
 
+    // Friend functions
+//    friend void OCVhelpers::histMat2QVector(const cv::Mat * mat,
+//                                            QVector<double> &vect);
+
+    void setHist(const QVector<double> &x, const QVector<double> &y);
 signals:
     void newMinFromHist(int min);
     void newMaxFromHist(int max);
@@ -28,12 +37,16 @@ public slots:
 protected:
     void initPlot();
     void initBorders();
-    void fillBorders(QCPXOneDirSlidingRect *leftRect, QCPXOneDirSlidingRect *rightRect);
+    void fillBorders(QCPXOneDirSlidingRect *leftRect,
+                     QCPXOneDirSlidingRect *rightRect);
     QCPXOneDirSlidingRect * leftRect;
     QCPXOneDirSlidingRect * rightRect;
     int leftBorderCoord;
     int rightBorderCoord;
     FillColorBehav * rectFiller;
+
+    QVector<double> x;
+    QVector<double> y;
 
 private slots:
 

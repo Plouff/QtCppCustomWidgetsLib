@@ -5,6 +5,8 @@
 //#include "qcustomplot.h"
 
 #include "fillcolorbehav.h"
+#include "histogramcalculator.h"
+#include "histowitheditboxes.h"
 
 namespace Ui {
 class PicHistogram;
@@ -17,6 +19,7 @@ public:
     explicit PicHistogramManager(QWidget *parent = 0);
     ~PicHistogramManager();
     void initWidget();
+    void setHist(const HistogramCalculator *hist);
 
 signals:
 
@@ -30,6 +33,10 @@ protected:
 
 private:
     Ui::PicHistogram *ui;
+    HistoWithEditboxes *rgbHist;
+    HistoWithEditboxes *redHist;
+    HistoWithEditboxes *greenHist;
+    HistoWithEditboxes *blueHist;
 };
 
 #endif // PICHISTOGRAM_H

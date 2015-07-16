@@ -5,7 +5,7 @@
 #include "qcpxonedirslidingrect.h"
 #include "singlehistogram.h"
 #include "ui_singlehistogram.h"
-
+#include "opencvhelpers.h"
 
 SingleHistogram::SingleHistogram(QWidget *parent) :
     QCustomPlot(parent)
@@ -20,7 +20,6 @@ SingleHistogram::SingleHistogram(QWidget *parent) :
 
 SingleHistogram::~SingleHistogram()
 {
-    delete rectFiller;
 }
 
 void SingleHistogram::updateCoord(QCPXOneDirSlidingRect *rect, int newCoord)
@@ -54,6 +53,11 @@ void SingleHistogram::updateRectFill(FillColorBehav &prectFiller)
 {
     rectFiller = &prectFiller;
     fillBorders(leftRect, rightRect);
+}
+
+void SingleHistogram::displayMat(cv::Mat *pMat, int numPoints)
+{
+    OCVhelpers::histMat2QVector(pMat, y);
 }
 
 void SingleHistogram::setUserInputMin(int value)
@@ -114,7 +118,8 @@ void SingleHistogram::initBorders()
     rightBorderCoord = 255;
 }
 
-void SingleHistogram::fillBorders(QCPXOneDirSlidingRect *leftRect, QCPXOneDirSlidingRect *rightRect)
+void SingleHistogram::fillBorders(QCPXOneDirSlidingRect *leftRect,
+                                  QCPXOneDirSlidingRect *rightRect)
 {
     this->addItem(leftRect);
     // Fill with light color
@@ -123,4 +128,11 @@ void SingleHistogram::fillBorders(QCPXOneDirSlidingRect *leftRect, QCPXOneDirSli
     this->addItem(rightRect);
     // Fill with light color
     rectFiller->fillLight(rightRect);
+}
+
+void SingleHistogram::setHist(const QVector<double> &x,
+                              const QVector<double> &y)
+{
+    this->graph()->setData(x, y);
+    this->graph()->rescaleAxes(true);
 }

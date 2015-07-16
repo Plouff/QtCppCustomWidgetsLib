@@ -1,6 +1,5 @@
 #ifndef OPENCVHELPERS
 #define OPENCVHELPERS
-
 /*
    Functions to convert between OpenCV's cv::Mat and Qt's QImage and QPixmap.
 
@@ -13,12 +12,13 @@
 #include <QImage>
 #include <QPixmap>
 
-//#include "opencv2/imgproc/imgproc.hpp"
-//#include "opencv2/imgproc/types_c.h"
 #include <opencv2/opencv.hpp>
 
+#include "assert.h"
 
-inline QImage  cvMatToQImage( const cv::Mat &inMat )
+namespace OCVhelpers {
+
+inline QImage cvMatToQImage( const cv::Mat &inMat )
 {
     switch ( inMat.type() )
     {
@@ -69,6 +69,8 @@ inline QPixmap cvMatToQPixmap( const cv::Mat &inMat )
     return QPixmap::fromImage( cvMatToQImage( inMat ) );
 }
 
+
+void histMat2QVector(const cv::Mat * mat, QVector<double> &vect);
+
+}
 #endif // OPENCVHELPERS
-
-

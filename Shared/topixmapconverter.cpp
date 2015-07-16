@@ -14,7 +14,7 @@ QPixmap * FromCVMatToQPixmapConverter::convert()
 
     Q_ASSERT(rawPic != nullptr);
     // Convert cv::Mat into a Qpixmap
-    localPixMap = cvMatToQPixmap(*rawPic);
+    localPixMap = OCVhelpers::cvMatToQPixmap(*rawPic);
 
     return &localPixMap;
 }
@@ -25,7 +25,7 @@ QPixmap * FromCVMatToQPixmapConverter::convertFromPath(cv::String const path)
     *rawPic = cv::imread(path, 1);
 
     // Convert cv::Mat into a Qpixmap
-    localPixMap = cvMatToQPixmap(*rawPic);
+    localPixMap = OCVhelpers::cvMatToQPixmap(*rawPic);
 
     return &localPixMap;
 }

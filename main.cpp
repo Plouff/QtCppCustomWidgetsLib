@@ -1,6 +1,7 @@
 #include "debugmacros.h"
 #include "glpicviewerwithcommands.h"
 #include "histowitheditboxes.h"
+#include "histogramcalculator.h"
 #include "pichistogrammanager.h"
 #include "Shared/openglpicviewer.h"
 #include "singlehistogram.h"
@@ -24,8 +25,10 @@ int main(int argc, char *argv[])
     OpenGLPicViewer * openGLPicKeepAR;
     OpenGLPicViewer * openGLPicKeepARExpand;
     GLPicViewerWithCommands * picViewCmds;
+    HistogramCalculator * histCalc;
+    cv::Mat * mat;
 
-    int demoSelect = 1;
+    int demoSelect = 9;
 
     switch (demoSelect)
     {
@@ -94,12 +97,42 @@ int main(int argc, char *argv[])
         // cv::Mat convertion in GL pic viewer with commands demo
         picViewCmds = new GLPicViewerWithCommands(
                     0, Qt::KeepAspectRatioByExpanding);
-        cv::Mat mat = cv::imread("D:/Uluru.jpg");
-        picViewCmds->setCvMat(mat);
+        mat = new cv::Mat();
+        *mat = cv::imread("D:/Uluru.jpg");
+        picViewCmds->setCvMat(*mat);
         picViewCmds->show();
         picViewCmds->setPixmapWithPath("D:/lena.png");
         return app.exec();
         break;
+
+    case 8:
+        // Histogram computing
+        mat = new cv::Mat();
+        *mat = cv::imread("D:/Uluru.jpg");
+        histCalc = new HistogramCalculator(mat);
+        histCalc->configure();
+        histCalc->computeHist();
+
+        hist.setHist(histCalc->blueX, histCalc->blueY);
+        hist.show();
+        return app.exec();
+        break;
+
+    case 9:
+        // Histogram computing
+        mat = new cv::Mat();
+        *mat = cv::imread("D:/Uluru.jpg");
+        histCalc = new HistogramCalculator(mat);
+        histCalc->configure();
+        histCalc->computeHist();
+
+        // Histogram manager only
+        histmgr.setHist(histCalc);
+        histmgr.show();
+
+        return app.exec();
+        break;
     }
+    return 0;
 }
 

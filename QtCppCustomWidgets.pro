@@ -65,9 +65,7 @@ SOURCES += main.cpp \
     PicHistogramManager/SingleHistogram/fillcolorbehav.cpp \
     PicViewerWithHistUpdates/picviewerwithhistupdates.cpp \
     smalldemos.cpp \
-    Shared/openglpicviewer.cpp \
-    Shared/glpicviewerwithcommands.cpp \
-    Shared/topixmapconverter.cpp
+    PicHistogramManager/histogramcalculator.cpp
 
 
 
@@ -79,11 +77,8 @@ HEADERS += qtcppcustomwidgets.h \
     PicHistogramManager/SingleHistogram/histowitheditboxes.h \
     PicHistogramManager/SingleHistogram/fillcolorbehav.h \
     PicViewerWithHistUpdates/picviewerwithhistupdates.h \
-    Shared/openglpicviewer.h \
     debugmacros.h \
-    Shared/glpicviewerwithcommands.h \
-    Shared/opencvhelpers.h \
-    Shared/topixmapconverter.h
+    PicHistogramManager/histogramcalculator.h
 unix {
     target.path = /usr/lib
     INSTALLS += target
@@ -94,5 +89,8 @@ FORMS += \
     PicHistogramManager/SingleHistogram/histowitheditboxes.ui \
     PicHistogramManager/pichistogram.ui \
     PicViewerWithHistUpdates/picviewerwithhistupdates.ui \
-    Shared/glpicviewerwithcommands.ui
+
+# Add sub projects
+include(Shared/shared.pri)
+include(Shared/helpers/helpers.pri)
 
