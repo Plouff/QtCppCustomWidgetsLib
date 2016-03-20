@@ -52,9 +52,9 @@ void HistogramCalculator::computeHist()
     normalizeHists();
 
     // Convert the RGB planes into Qvector
-    matBins2QVector(rHist, redX, redY);
-    matBins2QVector(gHist, greenX, greenY);
-    matBins2QVector(bHist, blueX, blueY);
+    matBins2QVector(rHistNorm, redX, redY);
+    matBins2QVector(gHistNorm, greenX, greenY);
+    matBins2QVector(bHistNorm, blueX, blueY);
 }
 
 void HistogramCalculator::normalizeHists()

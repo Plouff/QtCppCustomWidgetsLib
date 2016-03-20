@@ -20,7 +20,7 @@ HistoWithEditboxes::~HistoWithEditboxes()
     delete ui;
 }
 
-void HistoWithEditboxes::updateRectFill(FillColorBehav &rectFiller)
+void HistoWithEditboxes::updateRectFill(FillerInterface &rectFiller)
 {
     ui->hist->updateRectFill(rectFiller);
 }

@@ -17,5 +17,7 @@ org.eclipse.core.resources.prefs
 
 # Qt Creator
 *.pro.user
+/debug/
+/dox/html/**
 
 

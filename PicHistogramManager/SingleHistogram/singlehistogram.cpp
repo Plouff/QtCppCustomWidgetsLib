@@ -49,7 +49,7 @@ int SingleHistogram::getUserInputMax()
     return rightRect->getXCoord();
 }
 
-void SingleHistogram::updateRectFill(FillColorBehav &prectFiller)
+void SingleHistogram::updateRectFill(FillerInterface &prectFiller)
 {
     rectFiller = &prectFiller;
     fillBorders(leftRect, rightRect);

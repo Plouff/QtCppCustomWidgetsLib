@@ -5,16 +5,16 @@
 //*************************************************************
 // Strategy Interface class
 //*************************************************************
-FillColorBehav::FillColorBehav() : QObject() {
+FillerInterface::FillerInterface() : QObject() {
 }
-FillColorBehav::~FillColorBehav() {}
+FillerInterface::~FillerInterface() {}
 
-void FillColorBehav::fillDark(QCPXOneDirSlidingRect *rect)
+void FillerInterface::fillDark(QCPXOneDirSlidingRect *rect)
 {
     rect->setBrush(*getDarkBrush());
 }
 
-void FillColorBehav::fillLight(QCPXOneDirSlidingRect *rect)
+void FillerInterface::fillLight(QCPXOneDirSlidingRect *rect)
 {
     rect->setBrush(*getLightBrush());
 }

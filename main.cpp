@@ -69,9 +69,9 @@ int main(int argc, char *argv[])
         openGLPicKeepAR = new OpenGLPicViewer();
         openGLPicKeepARExpand = new OpenGLPicViewer();
 
-        openGLPicIgnoreAR->setPixmapWithPath("D:/Uluru.jpg");
-        openGLPicKeepAR->setPixmapWithPath("D:/Uluru.jpg");
-        openGLPicKeepARExpand->setPixmapWithPath("D:/Uluru.jpg");
+        openGLPicIgnoreAR->setPixmapWithPath("D:/temp/Uluru.jpg");
+        openGLPicKeepAR->setPixmapWithPath("D:/temp/Uluru.jpg");
+        openGLPicKeepARExpand->setPixmapWithPath("D:/temp/Uluru.jpg");
 
         openGLPicIgnoreAR->setAspectRatioMode(Qt::IgnoreAspectRatio);
         openGLPicKeepAR->setAspectRatioMode(Qt::KeepAspectRatio);
@@ -87,9 +87,9 @@ int main(int argc, char *argv[])
     case 6:
         // GL pic viewer with commands demo
         picViewCmds = new GLPicViewerWithCommands(0, Qt::KeepAspectRatio);
-        picViewCmds->setPixmapWithPath("D:/Uluru.jpg");
+        picViewCmds->setPixmapWithPath("D:/temp/Uluru.jpg");
         picViewCmds->show();
-        picViewCmds->setPixmapWithPath("D:/lena.png");
+        picViewCmds->setPixmapWithPath("D:/temp/lena.png");
         return app.exec();
         break;
 
@@ -98,17 +98,17 @@ int main(int argc, char *argv[])
         picViewCmds = new GLPicViewerWithCommands(
                     0, Qt::KeepAspectRatioByExpanding);
         mat = new cv::Mat();
-        *mat = cv::imread("D:/Uluru.jpg");
+        *mat = cv::imread("D:/temp/Uluru.jpg");
         picViewCmds->setCvMat(*mat);
         picViewCmds->show();
-        picViewCmds->setPixmapWithPath("D:/lena.png");
+        picViewCmds->setPixmapWithPath("D:/temp/lena.png");
         return app.exec();
         break;
 
     case 8:
         // Histogram computing
         mat = new cv::Mat();
-        *mat = cv::imread("D:/Uluru.jpg");
+        *mat = cv::imread("D:/temp/Uluru.jpg");
         histCalc = new HistogramCalculator(mat);
         histCalc->configure();
         histCalc->computeHist();
@@ -121,7 +121,7 @@ int main(int argc, char *argv[])
     case 9:
         // Histogram computing
         mat = new cv::Mat();
-        *mat = cv::imread("D:/Uluru.jpg");
+        *mat = cv::imread("D:/temp/P1070216.JPG");
         histCalc = new HistogramCalculator(mat);
         histCalc->configure();
         histCalc->computeHist();

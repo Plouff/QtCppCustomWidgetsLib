@@ -50,47 +50,21 @@ LIBS += -lopencv_core300 \
 # PROJECT SRC ####################################
 ##################################################
 
-INCLUDEPATH += ../../QtExternalLibs/qcustomplot \
-    PicHistogramManager \
-    PicHistogramManager/SingleHistogram \
-    Shared
+INCLUDEPATH +=
 
 SOURCES += main.cpp \
-    qtcppcustomwidgets.cpp \
-    ../../QtExternalLibs/qcustomplot/qcustomplot.cpp \
-    PicHistogramManager/pichistogrammanager.cpp \
-    PicHistogramManager/SingleHistogram/qcpxonedirslidingrect.cpp \
-    PicHistogramManager/SingleHistogram/singlehistogram.cpp \
-    PicHistogramManager/SingleHistogram/histowitheditboxes.cpp \
-    PicHistogramManager/SingleHistogram/fillcolorbehav.cpp \
-    PicViewerWithHistUpdates/picviewerwithhistupdates.cpp \
-    smalldemos.cpp \
-    PicHistogramManager/histogramcalculator.cpp
+    qtcppcustomwidgets.cpp
 
+HEADERS += qtcppcustomwidgets.h
 
-
-HEADERS += qtcppcustomwidgets.h \
-    ../../QtExternalLibs/qcustomplot/qcustomplot.h \
-    PicHistogramManager/pichistogrammanager.h \
-    PicHistogramManager/SingleHistogram/singlehistogram.h \
-    PicHistogramManager/SingleHistogram/qcpxonedirslidingrect.h \
-    PicHistogramManager/SingleHistogram/histowitheditboxes.h \
-    PicHistogramManager/SingleHistogram/fillcolorbehav.h \
-    PicViewerWithHistUpdates/picviewerwithhistupdates.h \
-    debugmacros.h \
-    PicHistogramManager/histogramcalculator.h
 unix {
     target.path = /usr/lib
     INSTALLS += target
 }
 
-FORMS += \
-    PicHistogramManager/SingleHistogram/singlehistogram.ui \
-    PicHistogramManager/SingleHistogram/histowitheditboxes.ui \
-    PicHistogramManager/pichistogram.ui \
-    PicViewerWithHistUpdates/picviewerwithhistupdates.ui \
+FORMS +=
 
 # Add sub projects
-include(Shared/shared.pri)
-include(Shared/helpers/helpers.pri)
+include(QtCppCustomWidgets.pri)
+
 

@@ -5,12 +5,13 @@
 
 class QCPXOneDirSlidingRect;
 
-class FillColorBehav: public QObject
+/// The filler interface
+class FillerInterface: public QObject
 {
     Q_OBJECT
 public:
-    FillColorBehav();
-    ~FillColorBehav();
+    FillerInterface();
+    ~FillerInterface();
 
     void fillDark(QCPXOneDirSlidingRect *rect);
     void fillLight(QCPXOneDirSlidingRect *rect);
@@ -18,28 +19,28 @@ public:
     virtual const QBrush *getLightBrush() =0;
 };
 
-class RedFiller: public FillColorBehav
+class RedFiller: public FillerInterface
 {
     public:
         const QBrush *getDarkBrush();
         const QBrush *getLightBrush();
 };
 
-class GreenFiller: public FillColorBehav
+class GreenFiller: public FillerInterface
 {
     public:
         const QBrush *getDarkBrush();
         const QBrush *getLightBrush();
 };
 
-class BlueFiller: public FillColorBehav
+class BlueFiller: public FillerInterface
 {
     public:
         const QBrush *getDarkBrush();
         const QBrush *getLightBrush();
 };
 
-class GrayFiller: public FillColorBehav
+class GrayFiller: public FillerInterface
 {
     public:
         const QBrush *getDarkBrush();

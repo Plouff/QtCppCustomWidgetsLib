@@ -18,7 +18,7 @@ public:
     void updateCoord(QCPXOneDirSlidingRect *rect, int newCoord);
     int getUserInputMin();
     int getUserInputMax();
-    void updateRectFill(FillColorBehav &prectFiller);
+    void updateRectFill(FillerInterface &prectFiller);
     void displayMat(cv::Mat * pMat, int numPoints);
 
     // Friend functions
@@ -43,7 +43,7 @@ protected:
     QCPXOneDirSlidingRect * rightRect;
     int leftBorderCoord;
     int rightBorderCoord;
-    FillColorBehav * rectFiller;
+    FillerInterface * rectFiller;
 
     QVector<double> x;
     QVector<double> y;
