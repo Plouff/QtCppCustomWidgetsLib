@@ -107,13 +107,13 @@ void SingleHistogram::initBorders()
 {
     // Left rectangle
     leftRect  = new QCPXOneDirSlidingRect(
-                this, -7000, 7000, 0, -7000, 0, 255,
+                this, -7000, 1, 0, -7000, 0, 255,
                 mainCoord::rightX, xAxis);
     leftBorderCoord = 0;
 
     // Right rectangle
     rightRect  = new QCPXOneDirSlidingRect(
-                this, 255, 7000, 7000, -7000, 0, 255,
+                this, 255, 1, 7000, -7000, 0, 255,
                 mainCoord::leftX, xAxis);
     rightBorderCoord = 255;
 }
@@ -130,9 +130,9 @@ void SingleHistogram::fillBorders(QCPXOneDirSlidingRect *leftRect,
     rectFiller->fillLight(rightRect);
 }
 
-void SingleHistogram::setHist(const QVector<double> &x,
-                              const QVector<double> &y)
+void SingleHistogram::setHist(const helper::coord_s<double> *histCoords)
 {
-    this->graph()->setData(x, y);
-    this->graph()->rescaleAxes(true);
+    graph(0)->setData(histCoords->x, histCoords->y);
+    graph(0)->rescaleAxes(true);
+    replot();
 }

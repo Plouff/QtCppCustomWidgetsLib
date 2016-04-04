@@ -5,8 +5,16 @@
 // Source:
 // http://docs.opencv.org/doc/tutorials/imgproc/histograms/histogram_calculation/histogram_calculation.html
 
-HistogramCalculator::HistogramCalculator(cv::Mat * pMat, QObject *parent) :
-    QObject(parent), mat(pMat)
+HistogramCalculator::HistogramCalculator(cv::Mat *pMat,
+        helper::histMats_s *phistMatRaw,
+        helper::histMats_s *phistMatNormalized,
+        helper::histGraphs_s<double> *pHistGraphs,
+        QObject *parent) :
+    QObject(parent),
+    mat(pMat),
+    histMatRaw(phistMatRaw),
+    histMatNormalized(phistMatNormalized),
+    histGraphs(pHistGraphs)
 {
     configured = false;
     uniform = true;
@@ -35,33 +43,36 @@ void HistogramCalculator::configure(int pBins, float pRange[2])
 
 void HistogramCalculator::computeHist()
 {
+    std::vector<cv::Mat> bgrPlanes;
+
     assert(configured);
 
     // Separate the image in 3 places (B, G and R)
     cv::split(*mat, bgrPlanes);
 
     const float* constHistRange = { histRange };
-    cv::calcHist(&bgrPlanes[0], 1, 0, cv::Mat(), bHist, 1, &bins,
+
+    cv::calcHist(&bgrPlanes[0], 1, 0, cv::Mat(), histMatRaw->blue, 1, &bins,
             &constHistRange, uniform, accumulate);
-    cv::calcHist(&bgrPlanes[1], 1, 0, cv::Mat(), gHist, 1, &bins,
+    cv::calcHist(&bgrPlanes[1], 1, 0, cv::Mat(), histMatRaw->green, 1, &bins,
             &constHistRange, uniform, accumulate );
-    cv::calcHist(&bgrPlanes[2], 1, 0, cv::Mat(), rHist, 1, &bins,
+    cv::calcHist(&bgrPlanes[2], 1, 0, cv::Mat(), histMatRaw->red, 1, &bins,
             &constHistRange, uniform, accumulate );
 
-    // Normalize histograms (avoid finding a maximum and scaling the plot)
+    // Normalize histograms (avoids finding a maximum and scaling the plot)
     normalizeHists();
 
     // Convert the RGB planes into Qvector
-    matBins2QVector(rHistNorm, redX, redY);
-    matBins2QVector(gHistNorm, greenX, greenY);
-    matBins2QVector(bHistNorm, blueX, blueY);
+    matBins2QVector(histMatNormalized->red, histGraphs->red.x, histGraphs->red.y);
+    matBins2QVector(histMatNormalized->green, histGraphs->green.x, histGraphs->green.y);
+    matBins2QVector(histMatNormalized->blue, histGraphs->blue.x, histGraphs->blue.y);
 }
 
 void HistogramCalculator::normalizeHists()
 {
-    cv::normalize(bHist, bHistNorm, 0, 1, cv::NORM_MINMAX, -1, cv::Mat() );
-    cv::normalize(gHist, gHistNorm, 0, 1, cv::NORM_MINMAX, -1, cv::Mat() );
-    cv::normalize(rHist, rHistNorm, 0, 1, cv::NORM_MINMAX, -1, cv::Mat() );
+    cv::normalize(histMatRaw->blue, histMatNormalized->blue, 0, 1, cv::NORM_MINMAX, -1, cv::Mat() );
+    cv::normalize(histMatRaw->green, histMatNormalized->green, 0, 1, cv::NORM_MINMAX, -1, cv::Mat() );
+    cv::normalize(histMatRaw->red, histMatNormalized->red, 0, 1, cv::NORM_MINMAX, -1, cv::Mat() );
 }
 
 void HistogramCalculator::displayHist(cv::Mat pHist)
@@ -76,14 +87,15 @@ void HistogramCalculator::displayHist(cv::Mat pHist)
 
 void HistogramCalculator::displayHists()
 {
-    displayHist(bHist);
-    displayHist(gHist);
-    displayHist(rHist);
+    displayHist(histMatRaw->red);
+    displayHist(histMatRaw->green);
+    displayHist(histMatRaw->blue);
     std::cout << std::flush;
 }
 
+template <typename T>
 void HistogramCalculator::matBins2QVector(
-        const cv::Mat &pHist, QVector<double> &x, QVector<double> &y)
+        const cv::Mat &pHist, QVector<T> &x, QVector<T> &y)
 {
     cv::MatConstIterator_<float> it, end;
     int i = 0;
@@ -92,7 +104,7 @@ void HistogramCalculator::matBins2QVector(
          ++it, i++)
     {
         x.append(i);
-        y.append((double) *it); // TODO: convert float in double
+        y.append((T) *it);
         // Or try float directly
     }
 }

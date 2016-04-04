@@ -25,7 +25,8 @@ public:
 //    friend void OCVhelpers::histMat2QVector(const cv::Mat * mat,
 //                                            QVector<double> &vect);
 
-    void setHist(const QVector<double> &x, const QVector<double> &y);
+    void setHist(const helper::coord_s<double> *histCoords);
+
 signals:
     void newMinFromHist(int min);
     void newMaxFromHist(int max);

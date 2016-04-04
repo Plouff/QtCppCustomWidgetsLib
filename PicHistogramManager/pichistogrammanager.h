@@ -7,6 +7,7 @@
 #include "fillcolorbehav.h"
 #include "histogramcalculator.h"
 #include "histowitheditboxes.h"
+#include "histogramtypes.h"
 
 namespace Ui {
 class PicHistogram;
@@ -19,7 +20,7 @@ public:
     explicit PicHistogramManager(QWidget *parent = 0);
     ~PicHistogramManager();
     void initWidget();
-    void setHist(const HistogramCalculator *hist);
+    void setHist(const helper::histGraphs_s<double> *hists);
 
 signals:
 
@@ -33,10 +34,10 @@ protected:
 
 private:
     Ui::PicHistogram *ui;
-    HistoWithEditboxes *rgbHist;
-    HistoWithEditboxes *redHist;
-    HistoWithEditboxes *greenHist;
-    HistoWithEditboxes *blueHist;
+    HistoWithEditboxes *rgbHistViewer;
+    HistoWithEditboxes *redHistViewer;
+    HistoWithEditboxes *greenHistViewer;
+    HistoWithEditboxes *blueHistViewer;
 };
 
 #endif // PICHISTOGRAM_H

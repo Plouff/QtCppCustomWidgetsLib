@@ -13,7 +13,8 @@ HEADERS += \
     $$PWD/glpicviewerwithcommands.h \
     $$PWD/opencvhelpers.h \
     $$PWD/topixmapconverter.h \
-    $$PWD/splitterdecoration.h
+    $$PWD/splitterdecoration.h \
+    $$PWD/histogramtypes.h
 
 FORMS += \
     $$PWD/glpicviewerwithcommands.ui

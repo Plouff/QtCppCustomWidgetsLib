@@ -25,12 +25,10 @@ void HistoWithEditboxes::updateRectFill(FillerInterface &rectFiller)
     ui->hist->updateRectFill(rectFiller);
 }
 
-void HistoWithEditboxes::setHist(const QVector<double> &x, const QVector<double> &y)
+void HistoWithEditboxes::setHist(const helper::coord_s<double> *histCoords)
 {
-    ui->hist->setHist(x, y);
+    ui->hist->setHist(histCoords);
 }
-
-
 
 void HistoWithEditboxes::setMinInTextBox(int min)
 {

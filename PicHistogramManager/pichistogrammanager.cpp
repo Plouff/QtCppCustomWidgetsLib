@@ -16,30 +16,30 @@ PicHistogramManager::PicHistogramManager(QWidget *parent) :
 
 void PicHistogramManager::initWidget()
 {
-    rgbHist = ui->rgbHist;
-    redHist = ui->redHist;
-    greenHist = ui->greenHist;
-    blueHist = ui->blueHist;
+    rgbHistViewer = ui->rgbHist;
+    redHistViewer = ui->redHist;
+    greenHistViewer = ui->greenHist;
+    blueHistViewer = ui->blueHist;
 
     grayFiller = new GrayFiller ();
-    rgbHist->updateRectFill(*grayFiller);
+    rgbHistViewer->updateRectFill(*grayFiller);
 
     redFiller = new RedFiller();
-    redHist->updateRectFill(*redFiller);
+    redHistViewer->updateRectFill(*redFiller);
 
     greenFiller = new GreenFiller();
-    greenHist->updateRectFill(*greenFiller);
+    greenHistViewer->updateRectFill(*greenFiller);
 
     blueFiller = new BlueFiller();
-    blueHist->updateRectFill(*blueFiller);
+    blueHistViewer->updateRectFill(*blueFiller);
 }
 
-void PicHistogramManager::setHist(const HistogramCalculator *hist)
+void PicHistogramManager::setHist(const helper::histGraphs_s<double> *hists)
 {
 //    rgbHist->updateRectFill(*grayFiller);
-    redHist->setHist(hist->redX, hist->redY);
-    greenHist->setHist(hist->greenX, hist->greenY);
-    blueHist->setHist(hist->blueX, hist->blueY);
+    redHistViewer->setHist(&hists->red);
+    greenHistViewer->setHist(&hists->green);
+    blueHistViewer->setHist(&hists->blue);
 }
 
 PicHistogramManager::~PicHistogramManager()

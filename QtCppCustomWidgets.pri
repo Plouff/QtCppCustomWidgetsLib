@@ -41,5 +41,5 @@ FORMS += \
 
 # Add sub projects
 include($$PWD/Shared/shared.pri)
-include($$PWD/QCustomPlot/qcustomplot.pri)
+include($$PWD/QCustomPlotLib/qcustomplot.pri)
 

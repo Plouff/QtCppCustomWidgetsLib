@@ -6,25 +6,30 @@
 
 #include "opencv2/opencv.hpp"
 
+#include "histogramtypes.h"
+
 class HistogramCalculator : public QObject
 {
     Q_OBJECT
 public:
     explicit HistogramCalculator(
-            cv::Mat * pMat = nullptr,
+            cv::Mat *pMat,
+            helper::histMats_s *phistMatRaw,
+            helper::histMats_s *phistMatNormalizes,
+            helper::histGraphs_s<double> * pHistGraphs,
             QObject *parent = nullptr);
+
     ~HistogramCalculator();
     void configure(int pBins = 256, float pRange[2] = nullptr);
     void computeHist();
     void normalizeHists();
     void displayHists();
-    QVector<double> redX, redY, greenX, greenY, blueX, blueY;
 
 protected:
-    cv::Mat * mat;
-    cv::Mat bHist, gHist, rHist;
-    cv::Mat bHistNorm, gHistNorm, rHistNorm;
-    std::vector<cv::Mat> bgrPlanes;
+    cv::Mat *mat;
+    helper::histMats_s *histMatRaw;
+    helper::histMats_s *histMatNormalized;
+    helper::histGraphs_s<double> *histGraphs;
 
     int bins;
     float histRange[2];
@@ -34,8 +39,9 @@ protected:
     bool configured;
 
     void displayHist(cv::Mat pHist);
-    void matBins2QVector(
-            const cv::Mat &pHist, QVector<double> &x, QVector<double> &y);
+
+    template <typename T>
+    void matBins2QVector(const cv::Mat &pHist, QVector<T> &x, QVector<T> &y);
 signals:
 
 public slots:

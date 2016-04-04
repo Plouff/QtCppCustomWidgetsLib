@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "fillcolorbehav.h"
+#include "histogramtypes.h"
 
 namespace Ui {
 class HistoWithEditboxes;
@@ -16,7 +17,7 @@ public:
     explicit HistoWithEditboxes(QWidget *parent = 0);
     ~HistoWithEditboxes();
     void updateRectFill(FillerInterface &rectFiller);
-    void setHist(const QVector<double> &x, const QVector<double> &y);
+    void setHist(const helper::coord_s<double> *histCoords);
 
 
 private:
