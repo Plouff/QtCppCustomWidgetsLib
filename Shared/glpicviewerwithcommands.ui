@@ -121,7 +121,7 @@
       </layout>
      </item>
      <item>
-      <widget class="OpenGLPicViewer" name="picViewer" native="true"/>
+      <widget class="OpenGLPicViewer" name="glPicViewer" native="true"/>
      </item>
     </layout>
    </item>

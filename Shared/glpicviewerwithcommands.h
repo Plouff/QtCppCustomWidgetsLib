@@ -22,16 +22,11 @@ public:
             Qt::AspectRatioMode initialAspectRatio = Qt::KeepAspectRatio);
     ~GLPicViewerWithCommands();
     void setAspectRatio(Qt::AspectRatioMode aspectRatio);
-
+    void setPixmap(QPixmap * pixmap);
     void setPixmapWithPath(QString path);
-    void setCvMat(cv::Mat &pMat);
-    void setCvMatWithPath(cv::String const path);
 
 protected :
-    cv::Mat * cvMat;
-    cv::Mat localCvMat;
     QPixmap * pixmap;
-    ToQPixmapConverter * converter;
 
 private:
     Ui::GLPicViewerWithCommands *ui;

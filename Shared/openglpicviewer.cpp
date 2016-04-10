@@ -16,7 +16,7 @@ OpenGLPicViewer::OpenGLPicViewer(
 {
     setAutoFillBackground(true);
     scaler = QTransform();
-    pixmapsizescaled = QSize();
+    pixmapSizeScaled = QSize();
 
     drawingOrigin = QPoint(0, 0);
     lastDrawingOrigin = QPoint(0, 0);
@@ -24,27 +24,42 @@ OpenGLPicViewer::OpenGLPicViewer(
     beingDragged = false;
 }
 
-OpenGLPicViewer::~OpenGLPicViewer()
+void OpenGLPicViewer::setPixmap(QPixmap * pPixmap)
 {
-    delete pixmap;
+    pixmap = pPixmap;
+    // Reset local QPixmap
+    locPixmap = QPixmap();
+    update();
 }
 
-void OpenGLPicViewer::setPixmap(const QPixmap &p)
+/**
+ * @brief Remove reference to the external QPixmap in use
+ *
+ * #OpenGLPicViewer holds a pointer to an external QPixmap to be displayed.
+ * Before deleteing (ie. using @c delete) this external reference, must be
+ * dereferenced in the #OpenGLPicViewer objects.
+ * This dereference is acheived when calling this function.
+ */
+void OpenGLPicViewer::removePixmap()
 {
-    pixmap = &p;
+    // Reset local QPixmap
+    locPixmap = QPixmap();
+    pixmap = &locPixmap;
     update();
 }
 
 void OpenGLPicViewer::setPixmapWithPath(QString path)
 {
-    pixmap = new QPixmap(path);
+    // Use local QPixmap to hold the picture
+    locPixmap = QPixmap(path); // returns a null QPixmap if file doesn't exist
+    pixmap = &locPixmap;
     update();
 }
 
 void OpenGLPicViewer::resetPixmapSize()
 {
-    pixmapsizescaled.setWidth(pixmap->width());
-    pixmapsizescaled.setHeight(pixmap->height());
+    pixmapSizeScaled.setWidth(pixmap->width());
+    pixmapSizeScaled.setHeight(pixmap->height());
 }
 
 Qt::AspectRatioMode OpenGLPicViewer::getAspectRatioMode() const
@@ -52,7 +67,7 @@ Qt::AspectRatioMode OpenGLPicViewer::getAspectRatioMode() const
     return aspectRatioMode;
 }
 
-void OpenGLPicViewer::setAspectRatioMode(const Qt::AspectRatioMode &value)
+void OpenGLPicViewer::setAspectRatioMode(const Qt::AspectRatioMode value)
 {
     if (aspectRatioMode != value)
     {
@@ -100,9 +115,9 @@ void OpenGLPicViewer::computeScaler(int neww, int newh)
         // Indeed the rounding alters the aspect ratio with the pictures is
         // enlarged again.
         resetPixmapSize();
-        pixmapsizescaled.scale(neww, newh, aspectRatioMode);
-        qreal xratio = pixmapsizescaled.width() / (qreal)pixmap->width();
-        qreal yratio = pixmapsizescaled.height() / (qreal)pixmap->height();
+        pixmapSizeScaled.scale(neww, newh, aspectRatioMode);
+        qreal xratio = pixmapSizeScaled.width() / (qreal)pixmap->width();
+        qreal yratio = pixmapSizeScaled.height() / (qreal)pixmap->height();
 
         // Set the scaler with previous ratios
         scaler.reset();
@@ -194,7 +209,7 @@ void OpenGLPicViewer::constrainDrawingOrigin()
 
     // Constrain X position
     int newx = drawingOrigin.x();
-    int xmin = -(pixmapsizescaled.width()-width()) - margin;
+    int xmin = -(pixmapSizeScaled.width()-width()) - margin;
     int xmax = 0+margin;
 
     if(newx < xmin)
@@ -204,7 +219,7 @@ void OpenGLPicViewer::constrainDrawingOrigin()
 
     // Constrain Y position
     int newy = drawingOrigin.y();
-    int ymin = -(pixmapsizescaled.height()-height()) - margin;
+    int ymin = -(pixmapSizeScaled.height()-height()) - margin;
     int ymax = 0+margin;
 
     if(newy < ymin)

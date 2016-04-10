@@ -7,45 +7,53 @@
 #include <opencv2/opencv.hpp>
 
 
-//******************************************************************************
-//******************************************************************************
-// Converter class template
-//******************************************************************************
-//******************************************************************************
+/**
+ * @brief The ToQPixmapConverter abstract class
+ */
 class ToQPixmapConverter : public QObject
 {
     Q_OBJECT
 
    public:
-      ToQPixmapConverter(QObject *parent = 0) : QObject(parent) {}
+      ToQPixmapConverter(
+              QPixmap *pPixMapDest,
+              QObject *parent = 0) :
+          QObject(parent),  pixMapDest(pPixMapDest) {}
+
       ~ToQPixmapConverter(){}
 
-      virtual QPixmap *convert() =0;
-      virtual QPixmap *convertFromPath(cv::String const path) =0;
+      virtual void convertFromPath(cv::String const path) =0;
+
+public slots:
+      virtual void convert() =0;
 
     protected:
-      QPixmap localPixMap;
-
+      QPixmap *pixMapDest;
 };
 
 //******************************************************************************
 
-//******************************************************************************
-//******************************************************************************
-// cv::Mat converter
-//******************************************************************************
-//******************************************************************************
-
-class FromCVMatToQPixmapConverter : public ToQPixmapConverter
+/**
+ * @brief The FromCVMatToQPixmapConverter class
+ */
+class CvMat2QPixmapConverter : public ToQPixmapConverter
 {
-   public:
-      FromCVMatToQPixmapConverter(QObject *parent = nullptr,
-                                  cv::Mat* prawPic = nullptr) :
-          ToQPixmapConverter(parent), rawPic(prawPic) {}
-      ~FromCVMatToQPixmapConverter(){delete rawPic;}
+    Q_OBJECT
 
-      virtual QPixmap *convert();
-      virtual QPixmap *convertFromPath(cv::String const path);
+   public:
+      CvMat2QPixmapConverter(
+              QPixmap *pPixMapDest,
+              cv::Mat *prawPic,
+              QObject *parent = nullptr) :
+          ToQPixmapConverter(pPixMapDest, parent), rawPic(prawPic) {}
+
+      ~CvMat2QPixmapConverter(){}
+
+      virtual void convertFromPath(cv::String const path);
+
+public slots:
+      virtual void convert();
+
    private:
       cv::Mat* rawPic;
 };

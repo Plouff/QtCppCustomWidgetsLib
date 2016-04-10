@@ -5,27 +5,22 @@
 
 //******************************************************************************
 //******************************************************************************
-// cv::Mat converter
+// cv::Mat to QPixmap converter
 //******************************************************************************
 //******************************************************************************
 
-QPixmap * FromCVMatToQPixmapConverter::convert()
+void CvMat2QPixmapConverter::convert()
 {
-
     Q_ASSERT(rawPic != nullptr);
     // Convert cv::Mat into a Qpixmap
-    localPixMap = OCVhelpers::cvMatToQPixmap(*rawPic);
-
-    return &localPixMap;
+    *pixMapDest = OCVhelpers::cvMatToQPixmap(*rawPic);
 }
 
-QPixmap * FromCVMatToQPixmapConverter::convertFromPath(cv::String const path)
+void CvMat2QPixmapConverter::convertFromPath(cv::String const path)
 {
     // Read picture in matPic
     *rawPic = cv::imread(path, 1);
 
     // Convert cv::Mat into a Qpixmap
-    localPixMap = OCVhelpers::cvMatToQPixmap(*rawPic);
-
-    return &localPixMap;
+    *pixMapDest = OCVhelpers::cvMatToQPixmap(*rawPic);
 }
